@@ -1,18 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/16 13:28:50 by siokim            #+#    #+#             */
-/*   Updated: 2021/11/16 14:54:23 by siokim           ###   ########.fr       */
+/*   Created: 2021/11/16 15:13:47 by siokim            #+#    #+#             */
+/*   Updated: 2021/11/16 15:18:02 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_bzero(void *s, size_t n)
+char	*strchr(const char *s, int c)
 {
-	ft_memset(s, 0, n);
+	while (*s)
+	{
+		if (*s == c)
+			return (s);
+		s++;
+	}
+	return 0;
 }
