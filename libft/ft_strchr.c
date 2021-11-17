@@ -6,19 +6,19 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 15:13:47 by siokim            #+#    #+#             */
-/*   Updated: 2021/11/16 22:10:51 by siokim           ###   ########.fr       */
+/*   Updated: 2021/11/17 15:22:09 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*strchr(const char *s, int c)
+char	*ft_strchr(const char *s, int c)
 {
 	while (*s)
 	{
 		if (*s == c)
-			return (s);
+			return ((char *)s);
 		s++;
 	}
-	return 0;
+	return (0);
 }

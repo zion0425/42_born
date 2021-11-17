@@ -6,7 +6,13 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 15:02:19 by siokim            #+#    #+#             */
-/*   Updated: 2021/11/16 15:02:21 by siokim           ###   ########.fr       */
+/*   Updated: 2021/11/17 16:57:48 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
+
+void	*memcpy(void *restrict dst, const void *restrict src, size_t n)
+{
+	
+}

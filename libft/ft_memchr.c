@@ -1,21 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   substr_main.c                                      :+:      :+:    :+:   */
+/*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sion <siokim@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: siokim <siokim.42seoul.kr>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/09 21:40:15 by sion              #+#    #+#             */
-/*   Updated: 2021/11/09 21:40:59 by sion             ###   ########.fr       */
+/*   Created: 2021/11/17 15:05:52 by siokim            #+#    #+#             */
+/*   Updated: 2021/11/17 15:21:37 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
+#include "libft.h"
 
-char	*ft_substr(char *s, unsigned int a, size_t b);
-
-int	main(void)
+void	*memchr(const void *s, int c, size_t n)
 {
-	printf("%s\n", ft_substr("abc", 1, 2));
-	printf("%s", ft_substr("abc", 1, 0));
+	const char	*str;
+
+	str = malloc(n);
+	if (!str)
+		return (0);
+	str = s;
+	return (ft_strchr(str, c));
 }
