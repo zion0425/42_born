@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 21:35:07 by sion              #+#    #+#             */
-/*   Updated: 2021/11/16 15:13:35 by siokim           ###   ########.fr       */
+/*   Updated: 2021/11/16 22:15:18 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,6 @@ int		ft_tolower(int c);
 size_t	ft_strlen(const char *s);
 void		*ft_memset(void *b, int c, size_t len);
 void		ft_bzero(void *s, size_t n);
+char		*stpncpy(char *dst, const char *src, size_t len);
 
 #endif
