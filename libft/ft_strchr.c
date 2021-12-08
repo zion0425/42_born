@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 15:13:47 by siokim            #+#    #+#             */
-/*   Updated: 2021/11/17 15:22:09 by siokim           ###   ########.fr       */
+/*   Updated: 2021/12/07 16:43:42 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,5 @@ char	*ft_strchr(const char *s, int c)
 			return ((char *)s);
 		s++;
 	}
-	return (0);
+	return (char *)(s);
 }
