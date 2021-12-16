@@ -1,29 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memchr.c                                        :+:      :+:    :+:   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/17 15:05:52 by siokim            #+#    #+#             */
-/*   Updated: 2021/12/15 09:46:06 by siokim           ###   ########.fr       */
+/*   Created: 2021/12/15 10:07:55 by siokim            #+#    #+#             */
+/*   Updated: 2021/12/15 10:19:52 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memchr(const void *s, int c, size_t n)
+void	*ft_memmove(void *dst, const void *src, size_t len)
 {
-	char	*str;
-	size_t	i;
-
-	i = 0;
-	str = (char *)s;
-	while (i++ < n)
-	{
-		if (*str == c)
-			return ((char *)str);
-		str++;
-	}
-	return (0);
+	return (ft_memcpy(dst, src, len));
 }

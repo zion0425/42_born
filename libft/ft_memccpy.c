@@ -1,29 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memchr.c                                        :+:      :+:    :+:   */
+/*   ft_memccpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/17 15:05:52 by siokim            #+#    #+#             */
-/*   Updated: 2021/12/15 09:46:06 by siokim           ###   ########.fr       */
+/*   Created: 2021/12/15 09:46:37 by siokim            #+#    #+#             */
+/*   Updated: 2021/12/15 09:51:59 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memchr(const void *s, int c, size_t n)
+void *ft_memccpy(void *dst, const void *src, int c, size_t n)
 {
-	char	*str;
-	size_t	i;
+	//if (!ft_memchr(src, c, n))
+	//	return
 
-	i = 0;
-	str = (char *)s;
-	while (i++ < n)
-	{
-		if (*str == c)
-			return ((char *)str);
-		str++;
-	}
-	return (0);
 }

@@ -1,29 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memchr.c                                        :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/17 15:05:52 by siokim            #+#    #+#             */
-/*   Updated: 2021/12/15 09:46:06 by siokim           ###   ########.fr       */
+/*   Created: 2021/12/14 15:36:28 by siokim            #+#    #+#             */
+/*   Updated: 2021/12/14 15:54:52 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memchr(const void *s, int c, size_t n)
+int	ft_atoi(const char *str)
 {
-	char	*str;
-	size_t	i;
+	int	sign;
+	int	result;
 
-	i = 0;
-	str = (char *)s;
-	while (i++ < n)
+	sign = 1;
+	result = 0;
+	while ((*str >= 9 && *str <= 13) || *str == 32)
+		str++;
+	if (*str == '+' || *str == '-')
 	{
-		if (*str == c)
-			return ((char *)str);
+		if (*str == '-')
+			sign *= -1;
+		str ++;
+	}
+	while (*str >= 48 && *str <= 57)
+	{
+		result = result * 10 + *str - 48;
 		str++;
 	}
-	return (0);
+	return (result * sign);
 }

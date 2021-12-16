@@ -1,12 +1,6 @@
 {
-    "files.associations": {
-        "libft.h": "c",
-        "stdlib.h": "c"
-    },
-    "editor.tabSize": 3,
-    "editor.renderWhitespace": "all",
-    "editor.comments.insertSpace": false,
-    "files.trimTrailingWhitespace": true,
-    "files.insertFinalNewline": true,
-    "editor.insertSpaces": false
+	"files.associations": {
+		"libft.h": "c",
+		"string.h": "c"
+	}
 }
