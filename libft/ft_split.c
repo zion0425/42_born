@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 14:20:00 by siokim            #+#    #+#             */
-/*   Updated: 2022/01/01 17:04:02 by siokim           ###   ########.fr       */
+/*   Updated: 2022/01/01 19:44:22 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char	**ft_split(char const *s, char c)
 	size_t	arr1_size;
 	size_t	i;
 
-	if (!s || !c)
+	if (!s)
 		return (0);
 	s = ft_strtrim(s, &c);
 	arr2_size = arr2_cnt(s, c);
