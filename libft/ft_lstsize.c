@@ -1,36 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_lstsize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/14 15:36:28 by siokim            #+#    #+#             */
-/*   Updated: 2021/12/27 11:56:01 by siokim           ###   ########.fr       */
+/*   Created: 2021/12/25 21:47:54 by siokim            #+#    #+#             */
+/*   Updated: 2021/12/25 21:48:48 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_atoi(const char *str)
+int	ft_lstsize(t_list *lst)
 {
-	int	sign;
-	int	result;
+	int	size;
 
-	sign = 1;
-	result = 0;
-	while ((*str >= 9 && *str <= 13) || *str == 32)
-		str++;
-	if (*str == '+' || *str == '-')
+	size = 0;
+	while (lst)
 	{
-		if (*str == '-')
-			sign *= -1;
-		str ++;
+		lst = lst -> next;
+		size++;
 	}
-	while (*str >= 48 && *str <= 57)
-	{
-		result = result * 10 + *str - 48;
-		str++;
-	}
-	return (result * sign);
+	return (size);
 }

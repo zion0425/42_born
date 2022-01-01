@@ -1,36 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/14 15:36:28 by siokim            #+#    #+#             */
-/*   Updated: 2021/12/27 11:56:01 by siokim           ###   ########.fr       */
+/*   Created: 2021/12/25 22:21:31 by siokim            #+#    #+#             */
+/*   Updated: 2021/12/26 14:51:54 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_atoi(const char *str)
+t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
-	int	sign;
-	int	result;
+	t_list	*list;
+	t_list	*tmp;
 
-	sign = 1;
-	result = 0;
-	while ((*str >= 9 && *str <= 13) || *str == 32)
-		str++;
-	if (*str == '+' || *str == '-')
+	list = 0;
+	while (lst)
 	{
-		if (*str == '-')
-			sign *= -1;
-		str ++;
+		tmp = ft_lstnew(f(lst->content));
+		if (!tmp)
+		{
+			ft_lstclear(&tmp, del);
+			return (0);
+		}
+		ft_lstadd_back(&list, tmp);
+		lst = lst->next;
 	}
-	while (*str >= 48 && *str <= 57)
-	{
-		result = result * 10 + *str - 48;
-		str++;
-	}
-	return (result * sign);
+	return (list);
 }

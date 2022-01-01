@@ -1,49 +1,57 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/16 17:55:52 by siokim            #+#    #+#             */
-/*   Updated: 2022/01/01 17:08:54 by siokim           ###   ########.fr       */
+/*   Created: 2021/12/22 14:22:48 by siokim            #+#    #+#             */
+/*   Updated: 2021/12/29 14:27:26 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-//#include <stdlib.h>
 
-//size_t	ft_strlen(const char *s)
-//{
-//	int	i;
-
-//	i = 0;
-//	while (s[i])
-//		i++;
-//	return (i);
-//}
-
-char	*ft_strdup(const char *s1)
+size_t	numsize(int n)
 {
-	char	*str;
-	size_t	i;
+	size_t	size;
 
-	i = ft_strlen(s1);
-	str = (char *)malloc(sizeof(char) * (i + 1));
+	size = 0;
+	if (n == 0)
+		return (1);
+	while (n != 0)
+	{
+		n /= 10;
+		size++;
+	}
+	return (size);
+}
+
+char	*ft_itoa(int n)
+{
+	size_t	size;
+	char	*str;
+	long	num;
+
+	size = numsize(n);
+	if (n < 0)
+		size++;
+	str = malloc(size + 1);
 	if (!str)
 		return (0);
-	str[i] = 0;
-	while (i--)
-		str[i] = s1[i];
+	num = n;
+	if (num == 0)
+		str[0] = '0';
+	if (num < 0)
+	{
+		str[0] = '-';
+		num *= -1;
+	}
+	str[size] = 0;
+	while (num > 0)
+	{
+		str[--size] = num % 10 + 48;
+		num /= 10;
+	}
 	return (str);
 }
-//#include <stdio.h>
-//int main()
-//{
-//	char *str;
-//	char *tmp = "this is a normal test";
-
-//	str = ft_strdup(tmp);
-//	printf("%s\n", str);
-
-//}

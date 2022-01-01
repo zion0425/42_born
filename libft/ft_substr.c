@@ -6,9 +6,10 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 05:07:28 by siokim            #+#    #+#             */
-/*   Updated: 2021/11/09 21:41:52 by sion             ###   ########.fr       */
+/*   Updated: 2021/12/26 15:20:47 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
@@ -18,12 +19,14 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	char			*tmp_str;
 
 	j = start;
-	i = -1;
-	tmp_str = (char *)malloc(sizeof(*s) * (len + 1));
+	i = 0;
+	if (!s)
+		return (0);
+	tmp_str = (char *)malloc(sizeof(char) * (len + 1));
 	if (!tmp_str)
-		return (NULL);
-	while (++i < len && s[j])
-		tmp_str[i] = s[j++];
+		return (0);
+	while (i < len && s[j] && start < ft_strlen(s))
+		tmp_str[i++] = s[j++];
 	tmp_str[i] = 0;
 	return (tmp_str);
 }

@@ -1,49 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/16 17:55:52 by siokim            #+#    #+#             */
-/*   Updated: 2022/01/01 17:08:54 by siokim           ###   ########.fr       */
+/*   Created: 2021/12/23 12:22:50 by siokim            #+#    #+#             */
+/*   Updated: 2021/12/29 15:21:54 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-//#include <stdlib.h>
 
-//size_t	ft_strlen(const char *s)
-//{
-//	int	i;
-
-//	i = 0;
-//	while (s[i])
-//		i++;
-//	return (i);
-//}
-
-char	*ft_strdup(const char *s1)
+char	*ft_strtrim(char const *s1, char const *set)
 {
 	char	*str;
-	size_t	i;
+	size_t	s1_size;
 
-	i = ft_strlen(s1);
-	str = (char *)malloc(sizeof(char) * (i + 1));
+	if (!s1 || !set)
+		return (0);
+	while (*s1 && ft_strchr(set, *s1))
+		s1++;
+	s1_size = ft_strlen(s1);
+	if (s1_size > 0)
+		while (s1[s1_size - 1] && ft_strchr(set, s1[s1_size - 1]))
+			s1_size--;
+	str = malloc(sizeof(char) * (s1_size + 1));
 	if (!str)
 		return (0);
-	str[i] = 0;
-	while (i--)
-		str[i] = s1[i];
+	ft_strlcpy(str, s1, s1_size + 1);
 	return (str);
 }
-//#include <stdio.h>
-//int main()
-//{
-//	char *str;
-//	char *tmp = "this is a normal test";
-
-//	str = ft_strdup(tmp);
-//	printf("%s\n", str);
-
-//}

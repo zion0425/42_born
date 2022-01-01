@@ -1,36 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/14 15:36:28 by siokim            #+#    #+#             */
-/*   Updated: 2021/12/27 11:56:01 by siokim           ###   ########.fr       */
+/*   Created: 2021/12/24 14:54:36 by siokim            #+#    #+#             */
+/*   Updated: 2022/01/01 17:00:56 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_atoi(const char *str)
+void	ft_putnbr_fd(int n, int fd)
 {
-	int	sign;
-	int	result;
+	long	num;
 
-	sign = 1;
-	result = 0;
-	while ((*str >= 9 && *str <= 13) || *str == 32)
-		str++;
-	if (*str == '+' || *str == '-')
+	num = n;
+	if (num < 0)
 	{
-		if (*str == '-')
-			sign *= -1;
-		str ++;
+		write(fd, "-", 1);
+		num *= -1;
 	}
-	while (*str >= 48 && *str <= 57)
+	if (num / 10 == 0)
 	{
-		result = result * 10 + *str - 48;
-		str++;
+		ft_putchar_fd(num % 10 + 48, fd);
 	}
-	return (result * sign);
+	else
+	{
+		ft_putnbr_fd(num / 10, fd);
+		ft_putchar_fd(num % 10 + 48, fd);
+	}
 }
