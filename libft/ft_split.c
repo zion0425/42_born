@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 14:20:00 by siokim            #+#    #+#             */
-/*   Updated: 2022/01/07 11:20:05 by siokim           ###   ########.fr       */
+/*   Updated: 2022/01/07 16:30:50 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ size_t	arr2_cnt(const char *s, char c)
 		s++;
 	if (!*s || !ft_strlen(s))
 		return (0);
+	if (!c)
+		return (1);
 	cnt = 1;
 	while (ft_strchr(s, c))
 	{
