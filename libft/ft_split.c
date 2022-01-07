@@ -6,25 +6,60 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 14:20:00 by siokim            #+#    #+#             */
-/*   Updated: 2022/01/06 20:53:45 by siokim           ###   ########.fr       */
+/*   Updated: 2022/01/07 11:00:42 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+//#include <stdio.h>
+//size_t	ft_strlen(const char *s)
+//{
+//	int	i;
+
+//	i = 0;
+//	while (s[i])
+//		i++;
+//	return (i);
+//}
+//size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
+//{
+//	size_t	src_len;
+
+//	src_len = ft_strlen(src);
+//	if (dstsize < 1)
+//		return (src_len);
+//	while (*src && --dstsize > 0)
+//		*dst++ = *src++;
+//	*dst = 0;
+//	return (src_len);
+//}
+//char	*ft_strchr(const char *s, int c)
+//{
+//	while (*s || !c)
+//	{
+//		if (*s == c)
+//			return ((char *)s);
+//		s++;
+//	}
+//	return (0);
+//}
 
 size_t	arr2_cnt(const char *s, char c)
 {
 	size_t	cnt;
 
-	if (!s || !ft_strlen(s))
+	while (*s && *s == c)
+		s++;
+	if (!*s || !ft_strlen(s))
 		return (0);
 	cnt = 1;
 	while (ft_strchr(s, c))
 	{
 		s = ft_strchr(s, c) + 1;
-		if (s)
-			if (*s == c)
-				continue ;
+		if (*s && *s == c)
+			continue ;
+		if (!*s)
+			break ;
 		cnt++;
 	}
 	return (cnt);
@@ -54,23 +89,6 @@ char	**malloc_free(char **s)
 	return (0);
 }
 
-char	*ft_trim(char const *s1, char *set)
-{
-	char	*str;
-	size_t	s1_size;
-
-	if (!s1 || !set)
-		return (0);
-	while (*s1 && ft_strchr(set, *s1))
-		s1++;
-	s1_size = ft_strlen(s1);
-	if (s1_size > 0)
-		while (s1[s1_size - 1] && ft_strchr(set, s1[s1_size - 1]))
-			s1_size--;
-	str = (char *)s1;
-	return (str);
-}
-
 char	**ft_split(char const *s, char c)
 {
 	char	**str;
@@ -78,17 +96,18 @@ char	**ft_split(char const *s, char c)
 	size_t	arr1_size;
 	size_t	i;
 
-	s = (char const *)ft_trim(s, &c);
+	if (!s)
+		return (0);
+	while (*s && *s == c)
+		s++;
 	arr2_size = arr2_cnt(s, c);
 	i = -1;
-	str = (char **)malloc(sizeof(char *) * (arr2_size + 1));
-	if (!str)
+	if (!(str = (char **)malloc(sizeof(char *) * (arr2_size + 1))))
 		return (0);
 	while (++i < arr2_size)
 	{
 		arr1_size = arr1_cnt(s, c);
-		str[i] = (char *)malloc(sizeof(char) * (arr1_size + 1));
-		if (!str[i])
+		if (!(str[i] = (char *)malloc(sizeof(char) * (arr1_size + 1))))
 			return ((char **)malloc_free(str));
 		ft_strlcpy(str[i], s, arr1_size + 1);
 		s = ft_strchr(s, c);
