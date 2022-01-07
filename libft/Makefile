@@ -6,7 +6,7 @@
 #    By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/09 04:40:59 by siokim            #+#    #+#              #
-#    Updated: 2021/12/30 01:56:16 by sion             ###   ########.fr        #
+#    Updated: 2022/01/06 15:38:40 by sion             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,11 +36,17 @@ B_SRCS = ft_lstnew.c ft_lstadd_front.c ft_lstsize.c \
 OBJS = $(SRCS:.c=.o)
 B_OBJS = $(B_SRCS:.c=.o)
 
-.PHONY:all clean fclean re
+ifdef WITH_BONUS
+	OBJ = $(OBJS) $(B_OBJS)
+else
+	OBJ = $(OBJS)
+endif
+
+.PHONY:all clean fclean re bonus
 
 all: $(NAME)
 
-$(NAME) : $(OBJS)
+$(NAME) : $(OBJ)
 	$(AR) $(ARFLAGS) $(NAME) $(OBJS)
 
 clean:
@@ -49,12 +55,8 @@ clean:
 fclean: clean
 	rm -f $(NAME)
 
-bonus: $(OBJS) $(B_OBJS) 
-	$(AR) $(ARFLAGS) $(NAME) $(B_OBJS)
-
+bonus: 
+	@make WITH_BONUS=1 all
 
 
 re: fclean all
-
-
-

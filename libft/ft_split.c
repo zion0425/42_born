@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 14:20:00 by siokim            #+#    #+#             */
-/*   Updated: 2022/01/05 17:52:19 by siokim           ###   ########.fr       */
+/*   Updated: 2022/01/06 20:53:45 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,23 @@ char	**malloc_free(char **s)
 	return (0);
 }
 
+char	*ft_trim(char const *s1, char *set)
+{
+	char	*str;
+	size_t	s1_size;
+
+	if (!s1 || !set)
+		return (0);
+	while (*s1 && ft_strchr(set, *s1))
+		s1++;
+	s1_size = ft_strlen(s1);
+	if (s1_size > 0)
+		while (s1[s1_size - 1] && ft_strchr(set, s1[s1_size - 1]))
+			s1_size--;
+	str = (char *)s1;
+	return (str);
+}
+
 char	**ft_split(char const *s, char c)
 {
 	char	**str;
@@ -61,7 +78,7 @@ char	**ft_split(char const *s, char c)
 	size_t	arr1_size;
 	size_t	i;
 
-	s = ft_strtrim(s, &c);
+	s = (char const *)ft_trim(s, &c);
 	arr2_size = arr2_cnt(s, c);
 	i = -1;
 	str = (char **)malloc(sizeof(char *) * (arr2_size + 1));
