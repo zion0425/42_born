@@ -6,7 +6,7 @@
 #    By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/09 04:40:59 by siokim            #+#    #+#              #
-#    Updated: 2022/01/06 15:38:40 by sion             ###   ########.fr        #
+#    Updated: 2022/01/07 11:38:03 by sion             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,7 +55,7 @@ clean:
 fclean: clean
 	rm -f $(NAME)
 
-bonus: 
+bonus:
 	@make WITH_BONUS=1 all
 
 
