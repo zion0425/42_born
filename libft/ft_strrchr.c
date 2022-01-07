@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 15:19:06 by siokim            #+#    #+#             */
-/*   Updated: 2022/01/01 18:24:12 by siokim           ###   ########.fr       */
+/*   Updated: 2022/01/07 12:01:36 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*ft_strrchr(const char *s, int c)
 	if (!c)
 		return ((char *)(s + size));
 	while (--size >= 0)
-		if (s[size] == c)
+		if (s[size] == (char)c)
 			return ((char *)(s + size));
 	return (0);
 }
