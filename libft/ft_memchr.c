@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 15:05:52 by siokim            #+#    #+#             */
-/*   Updated: 2022/01/07 11:59:46 by siokim           ###   ########.fr       */
+/*   Updated: 2022/01/07 16:40:40 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	*ft_memchr(const void *s, int c, size_t n)
 {
 	unsigned char	*str;
-	size_t	i;
+	size_t			i;
 
 	i = 0;
 	str = (unsigned char *)s;
