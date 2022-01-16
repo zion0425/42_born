@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 15:02:19 by siokim            #+#    #+#             */
-/*   Updated: 2021/12/29 15:07:39 by siokim           ###   ########.fr       */
+/*   Updated: 2022/01/10 14:58:55 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,9 @@
 void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
 	unsigned char	*tmp_dst;
-	unsigned char	*tmp_src;
+	const unsigned char	*tmp_src = (unsigned char *)src;
 
-	tmp_src = (unsigned char *)src;
-	tmp_dst = dst;
+	tmp_dst = (unsigned char *)dst;
 	if (tmp_dst == tmp_src)
 		return (tmp_dst);
 	while (n-- > 0)
