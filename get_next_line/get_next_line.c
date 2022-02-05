@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 15:16:00 by siokim            #+#    #+#             */
-/*   Updated: 2022/02/05 20:57:49 by siokim           ###   ########.fr       */
+/*   Updated: 2022/02/05 21:40:16 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ char	*get_next_line(int fd)
 	// free(tmp_str);
 
 	line = ft_strjoin(line, tmp_str);
-	
+
 	// tmp_str에서 \n까지 line에 복사
 	// if ((line = (char *)malloc(sizeof(char) * (ft_strlen(tmp_str) + 1))) == 0)
 	// 	return (0);
@@ -85,31 +85,36 @@ char	*get_next_line(int fd)
 	// }
 	
 	// 이거 수정 필요함;
-	if (ft_strchr(buffer, '\n') + 1 != 0)
+	if (*buffer && ft_strchr(buffer, '\n') + 1)
 	{
 		free(tmp_str);
 		tmp_str = ft_strjoin(tmp_str, ft_strchr(buffer, '\n') + 1);
 	}
-
+	else {
+		if(tmp_str)
+			free(tmp_str);
+	}
 	free(buffer);
 	return (line);
 }
 
-int main()
-{
-	int fd;
-	char *str;
+// int main()
+// {
+// 	int fd;
+// 	char *str;
 	
-	// fd = open("./gnlTester/files/41_no_nl", O_RDONLY);
-	fd = open("./test.txt", O_RDONLY);
+// 	 fd = open("./gnlTester/files/41_no_nl", O_RDONLY);
+// 	// fd = open("./test.txt", O_RDONLY);
 
-		printf("result : %s", str = get_next_line(fd));
-		free(str);
-				printf("result : %s", str = get_next_line(fd));
-		free(str);
+// 		printf("result : %s", str = get_next_line(fd));
+// 		free(str);
+// 		printf("result : %s", str = get_next_line(fd));
+// 		free(str);
+// 		printf("result : %s", str = get_next_line(fd));
+// 		free(str);
+// 		printf("result : %s", str = get_next_line(fd));
+// 		free(str);
 
-		printf("result : %s", str = get_next_line(fd));
-		free(str);
 
 
-}
+// }

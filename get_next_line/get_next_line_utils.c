@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 14:59:39 by siokim            #+#    #+#             */
-/*   Updated: 2022/02/05 20:56:12 by siokim           ###   ########.fr       */
+/*   Updated: 2022/02/05 21:35:49 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 #include <stdio.h>
 size_t	ft_strlen(const char *s)
 {
-	int	i;
-
+	size_t	i;
 	if (!s)
 		return (0);
 	i = 0;
@@ -51,6 +50,7 @@ char	*ft_strjoin_line(char *s1, char *s2)
 	tmp_str[i] = 0;
 	return (tmp_str);
 }
+
 void	*ft_memset(void *b, int c, size_t len)
 {
 	const unsigned char	mem_c = (unsigned char)c;
@@ -109,7 +109,6 @@ char	*ft_strjoin(char *s1, char *s2)
 	// 이게 제대로 작동 안 함
 	if (*s1)
 		free(s1);
-		
 	tmp_str[i] = 0;
 	return (tmp_str);
 }
