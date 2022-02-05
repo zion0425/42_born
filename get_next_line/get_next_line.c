@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 15:16:00 by siokim            #+#    #+#             */
-/*   Updated: 2022/01/22 20:24:34 by siokim           ###   ########.fr       */
+/*   Updated: 2022/02/05 14:29:39 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,37 +14,74 @@
 
 #include <stdio.h>
 #include <fcntl.h>
+
+// c를 만나는 지점의 인덱스 + 1
+//int	ft_strchr_idx(const char *s, int c)
+//{
+//	const char mem_c = (char)c;
+//	size_t	i;
+
+//	i = 1;
+//	while (*s || !mem_c)
+//	{
+//		if (*s++ == mem_c)
+//			return (i);
+//		i++;
+//	}
+//	return (0);
+//}
+
 char	*get_next_line(int fd)
 {
-	static char *str;
+	char	*buffer;
+	static char	*tmp_str;
+	int	last_line_idx;
 	char	*line;
-	size_t	last_str_idx;
-	size_t	last_line_idx;
 
 	if (fd < 0 || BUFFER_SIZE < 1)
 		return (0);
-	str = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
-	if (!str)
+
+	if ((buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1))) == 0)
 		return (0);
-	last_str_idx = read(fd, str, BUFFER_SIZE);
-	last_line_idx = ft_strchr_idx(str,10);
-	if (last_line_idx)
+
+	line = 0;
+	ft_bzero(buffer, BUFFER_SIZE + 1);
+
+	// tmp_str값이 없거나, 값이 있어도 그 값 안에 \n이 없는 경우 read를 반복 실행
+	if (!(tmp_str && ft_strchr(tmp_str, '\n')))
 	{
-		line = (char *)malloc(sizeof(char) * (last_line_idx + 1));
-		if (!line)
+		if ((last_line_idx = read(fd, buffer, BUFFER_SIZE)) == -1)
+		{
+			free(buffer);
 			return (0);
-		ft_strlcpy(line, str, last_line_idx);
-		return (line);
+		}
+
+		while (last_line_idx && !(ft_strchr((tmp_str = ft_strjoin(tmp_str, buffer)), '\n')))
+		{
+			last_line_idx = read(fd, buffer, BUFFER_SIZE);
+			buffer[last_line_idx] = 0;
+		}
 	}
-	str[last_str_idx] = 0;
-	return (str);
+
+	line = ft_strjoin(line, tmp_str);
+
+	if (tmp_str && (tmp_str = ft_strchr(tmp_str, '\n') + 1) == 0)
+		free(tmp_str);
+
+	free(buffer);
+	return (line);
 }
 
+int main()
+{
+	int fd;
+	char *str;
 
-//int main()
-//{
-//	int fd;
+	fd = open("./gnlTester/files/nl", O_RDONLY);
 
-//	fd = open("./test.txt", O_RDONLY);
-//	printf("%s\n", get_next_line(fd));
-//}
+	for (int i = 0 ; i < 2; i++)
+	{
+		printf("%s", str = get_next_line(fd));
+		free(str);
+	}
+}
