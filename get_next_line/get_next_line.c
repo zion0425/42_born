@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 15:16:00 by siokim            #+#    #+#             */
-/*   Updated: 2022/02/05 20:23:46 by siokim           ###   ########.fr       */
+/*   Updated: 2022/02/05 20:57:49 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ char	*get_next_line(int fd)
 	// tmp_str값이 없거나, 값이 있어도 그 값 안에 \n이 없는 경우 read를 반복 실행
 	if (!(tmp_str && ft_strchr(tmp_str, '\n')))
 	{
+
 		if ((last_line_idx = read(fd, buffer, BUFFER_SIZE)) < 1)
 		{
 			free(buffer);
@@ -83,31 +84,32 @@ char	*get_next_line(int fd)
 	// 	line[i] = 0;
 	// }
 	
-
-	// 여기서 tmp_str의 앞에 쓰레기 값들이 생겨나게 됨. 즉 이전 값을들 메모리 할당 해제 해주고 새로 주소값 줘야 함.
-	// tmp_str이 아니라 buffer로 비교하면 됨..;
-	if (ft_strchr(tmp_str, '\n') != 0)
+	// 이거 수정 필요함;
+	if (ft_strchr(buffer, '\n') + 1 != 0)
 	{
-		if(ft_strchr(tmp_str, '\n') + 1 == 0)
-			free(tmp_str);
-		else
-			tmp_str = ft_strchr(tmp_str, '\n') + 1;
+		free(tmp_str);
+		tmp_str = ft_strjoin(tmp_str, ft_strchr(buffer, '\n') + 1);
 	}
 
 	free(buffer);
 	return (line);
 }
 
-// int main()
-// {
-// 	int fd;
-// 	char *str;
+int main()
+{
+	int fd;
+	char *str;
 	
-// 	// fd = open("./gnlTester/files/empty", O_RDONLY);
-// 	fd = open("./test.txt", O_RDONLY);
+	// fd = open("./gnlTester/files/41_no_nl", O_RDONLY);
+	fd = open("./test.txt", O_RDONLY);
 
-// 	for (int i = 0; i <3; i++){
-// 		printf("result : %s", str = get_next_line(fd));
-// 		free(str);
-// 	}	
-// }
+		printf("result : %s", str = get_next_line(fd));
+		free(str);
+				printf("result : %s", str = get_next_line(fd));
+		free(str);
+
+		printf("result : %s", str = get_next_line(fd));
+		free(str);
+
+
+}
