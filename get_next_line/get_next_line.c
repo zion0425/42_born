@@ -6,47 +6,17 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 15:16:00 by siokim            #+#    #+#             */
-/*   Updated: 2022/02/06 16:44:05 by siokim           ###   ########.fr       */
+/*   Updated: 2022/02/06 20:10:13 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*get_next_line(int fd)
+char	*new_line(char *tmp_str)
 {
-	char		*buffer;
-	static char	*tmp_str;
-	int			last_line_idx;
 	char		*line;
 	size_t		i;
 
-	if (fd < 0 || BUFFER_SIZE < 1)
-		return (0);
-	buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
-	if (!buffer)
-		return (0);
-	line = 0;
-	ft_bzero(buffer, BUFFER_SIZE + 1);
-	if (!(tmp_str && ft_strchr(tmp_str, '\n')))
-	{
-		last_line_idx = read(fd, buffer, BUFFER_SIZE);
-		if (last_line_idx < 1 && !tmp_str)
-		{
-			free(buffer);
-			buffer = 0;
-			return (0);
-		}
-		while (last_line_idx)
-		{
-			tmp_str = ft_strjoin(tmp_str, buffer);
-			if (ft_strchr(tmp_str, '\n'))
-				break ;
-			last_line_idx = read(fd, buffer, BUFFER_SIZE);
-			buffer[last_line_idx] = 0;
-		}
-	}
-	else
-		buffer = ft_strjoin(buffer, tmp_str);
 	line = (char *)malloc(sizeof(char) * (ft_strlen(tmp_str) + 1));
 	if (!line)
 		return (0);
@@ -63,18 +33,55 @@ char	*get_next_line(int fd)
 		line[i + 1] = 0;
 		i++;
 	}
+	return (line);
+}
+
+char	*free_str(char *str)
+{
+	if (str)
+		free(str);
+	return (0);
+}
+
+char	*new_tmp_str(char *buffer, char *tmp_str)
+{
 	if (*buffer && *(ft_strchr(buffer, '\n') + 1))
 	{
-		free(tmp_str);
-		tmp_str = 0;
+		tmp_str = free_str(tmp_str);
 		tmp_str = ft_strjoin(tmp_str, ft_strchr(buffer, '\n') + 1);
 	}
 	else if (tmp_str)
+		tmp_str = free_str(tmp_str);
+	buffer = free_str(buffer);
+	return (tmp_str);
+}
+
+char	*get_next_line(int fd)
+{
+	char		*buffer;
+	static char	*tmp_str;
+	char		*line;
+
+	buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	if (fd < 0 || BUFFER_SIZE < 1 || !buffer)
+		return (buffer = free_str(buffer));
+	ft_bzero(buffer, BUFFER_SIZE + 1);
+	if (!tmp_str || !ft_strchr(tmp_str, '\n'))
 	{
-		free(tmp_str);
-		tmp_str = 0;
+		// 읽을내용이 없거나 잘못된 파일을 읽었을 경우 && tmp_str도 없을 경우 파일의 null부분을 읽은 것이므로 null리턴
+		if (read(fd, buffer, BUFFER_SIZE) < 1 && !tmp_str)
+			return (buffer = free_str(buffer));
+		while (*buffer)
+		{
+			tmp_str = ft_strjoin(tmp_str, buffer);
+			if (ft_strchr(tmp_str, '\n'))
+				break ;
+			buffer[read(fd, buffer, BUFFER_SIZE)] = 0;
+		}
 	}
-	free(buffer);
-	buffer = 0;
+	else
+		buffer = ft_strjoin(buffer, tmp_str);
+	line = new_line(tmp_str);
+	tmp_str = new_tmp_str(buffer, tmp_str);
 	return (line);
 }
