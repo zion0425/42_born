@@ -6,13 +6,13 @@
 #    By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/19 14:59:31 by siokim            #+#    #+#              #
-#    Updated: 2022/02/05 20:41:17 by siokim           ###   ########.fr        #
+#    Updated: 2022/02/06 15:57:01 by siokim           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -g#3 -fsanitize=address
-BUFFER = 1 
+BUFFER = 42	
 NAME = ./a.out
 
 SRCS = get_next_line.c get_next_line_utils.c

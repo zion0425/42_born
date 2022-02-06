@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 14:59:34 by siokim            #+#    #+#             */
-/*   Updated: 2022/02/01 13:46:46 by siokim           ###   ########.fr       */
+/*   Updated: 2022/02/06 16:36:18 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,11 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-int	ft_strchr_idx(const char *s, int c);
 size_t	ft_strlen(const char *s);
 char	*ft_strchr(const char *s, int c);
 char	*get_next_line(int fd);
 void	ft_bzero(void *s, size_t n);
-void	*ft_memset(void *b, int c, size_t len);
 char	*ft_strdup(char *s1);
 char	*ft_strjoin(char *s1, char *s2);
 
-# endif
+#endif
