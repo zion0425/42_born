@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 15:16:00 by siokim            #+#    #+#             */
-/*   Updated: 2022/02/06 20:10:13 by siokim           ###   ########.fr       */
+/*   Updated: 2022/02/08 14:14:32 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,11 @@ char	*new_line(char *tmp_str)
 	i = 0;
 	while (tmp_str[i])
 	{
-		if (tmp_str[i] == '\n')
-		{
-			line[i] = '\n';
-			line[i + 1] = 0;
-			break ;
-		}
 		line[i] = tmp_str[i];
-		line[i + 1] = 0;
-		i++;
+		if (tmp_str[i++] == '\n')
+			break ;
 	}
+	line[i] = 0;
 	return (line);
 }
 
@@ -68,7 +63,6 @@ char	*get_next_line(int fd)
 	ft_bzero(buffer, BUFFER_SIZE + 1);
 	if (!tmp_str || !ft_strchr(tmp_str, '\n'))
 	{
-		// 읽을내용이 없거나 잘못된 파일을 읽었을 경우 && tmp_str도 없을 경우 파일의 null부분을 읽은 것이므로 null리턴
 		if (read(fd, buffer, BUFFER_SIZE) < 1 && !tmp_str)
 			return (buffer = free_str(buffer));
 		while (*buffer)

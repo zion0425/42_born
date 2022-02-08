@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 14:59:39 by siokim            #+#    #+#             */
-/*   Updated: 2022/02/06 20:05:06 by siokim           ###   ########.fr       */
+/*   Updated: 2022/02/08 13:40:56 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,7 @@ char	*ft_strjoin(char *s1, char *s2)
 		tmp_str[i] = s1[i];
 	while (s2[j])
 		tmp_str[i++] = s2[j++];
-	if (s1)
-	{
-		free(s1);
-		s1 = 0;
-	}
+	s1 = free_str(s1);
 	tmp_str[i] = 0;
 	return (tmp_str);
 }
