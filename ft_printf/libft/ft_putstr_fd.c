@@ -1,26 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/09 19:17:25 by siokim            #+#    #+#             */
-/*   Updated: 2022/02/12 17:36:46 by siokim           ###   ########.fr       */
+/*   Created: 2021/12/24 14:50:04 by siokim            #+#    #+#             */
+/*   Updated: 2022/02/12 18:12:02 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
+#include "libft.h"
 
-# include <unistd.h>
-# include <stdlib.h>
-# include <stdarg.h>
-
-size_t	ft_strlen(char *str);
-void	ft_putstr_fd(char *s, int fd);
-char	*ft_itoa(int n);
-int	ft_printf(const char *args, ...);
-int	ft_toupper(int c);
-
-#endif
+void	ft_putstr_fd(char *s, int fd)
+{
+	if (!s)
+		return ;
+	write(fd, s, ft_strlen(s));
+}

@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/09 19:17:25 by siokim            #+#    #+#             */
-/*   Updated: 2022/02/12 17:36:46 by siokim           ###   ########.fr       */
+/*   Created: 2021/11/16 15:02:19 by siokim            #+#    #+#             */
+/*   Updated: 2022/01/10 14:58:55 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
+#include "libft.h"
 
-# include <unistd.h>
-# include <stdlib.h>
-# include <stdarg.h>
+void	*ft_memcpy(void *dst, const void *src, size_t n)
+{
+	unsigned char	*tmp_dst;
+	const unsigned char	*tmp_src = (unsigned char *)src;
 
-size_t	ft_strlen(char *str);
-void	ft_putstr_fd(char *s, int fd);
-char	*ft_itoa(int n);
-int	ft_printf(const char *args, ...);
-int	ft_toupper(int c);
-
-#endif
+	tmp_dst = (unsigned char *)dst;
+	if (tmp_dst == tmp_src)
+		return (tmp_dst);
+	while (n-- > 0)
+		*tmp_dst++ = *tmp_src++;
+	return (dst);
+}

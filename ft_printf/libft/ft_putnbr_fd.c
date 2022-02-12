@@ -1,26 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/09 19:17:25 by siokim            #+#    #+#             */
-/*   Updated: 2022/02/12 17:36:46 by siokim           ###   ########.fr       */
+/*   Created: 2021/12/24 14:54:36 by siokim            #+#    #+#             */
+/*   Updated: 2022/01/01 17:00:56 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
+#include "libft.h"
 
-# include <unistd.h>
-# include <stdlib.h>
-# include <stdarg.h>
+void	ft_putnbr_fd(int n, int fd)
+{
+	long	num;
 
-size_t	ft_strlen(char *str);
-void	ft_putstr_fd(char *s, int fd);
-char	*ft_itoa(int n);
-int	ft_printf(const char *args, ...);
-int	ft_toupper(int c);
-
-#endif
+	num = n;
+	if (num < 0)
+	{
+		write(fd, "-", 1);
+		num *= -1;
+	}
+	if (num / 10 == 0)
+	{
+		ft_putchar_fd(num % 10 + 48, fd);
+	}
+	else
+	{
+		ft_putnbr_fd(num / 10, fd);
+		ft_putchar_fd(num % 10 + 48, fd);
+	}
+}

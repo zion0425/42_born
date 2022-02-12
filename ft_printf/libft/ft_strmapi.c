@@ -1,26 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/09 19:17:25 by siokim            #+#    #+#             */
-/*   Updated: 2022/02/12 17:36:46 by siokim           ###   ########.fr       */
+/*   Created: 2021/12/22 16:38:31 by siokim            #+#    #+#             */
+/*   Updated: 2022/01/05 17:56:31 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
+#include "libft.h"
 
-# include <unistd.h>
-# include <stdlib.h>
-# include <stdarg.h>
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
+{
+	char	*str;
+	size_t	i;
 
-size_t	ft_strlen(char *str);
-void	ft_putstr_fd(char *s, int fd);
-char	*ft_itoa(int n);
-int	ft_printf(const char *args, ...);
-int	ft_toupper(int c);
-
-#endif
+	i = -1;
+	if (!s || !f)
+		return (0);
+	str = malloc(sizeof(char) * (ft_strlen(s) + 1));
+	if (!str)
+		return (0);
+	while (s[++i])
+		str[i] = f(i, s[i]);
+	str[i] = 0;
+	return (str);
+}
