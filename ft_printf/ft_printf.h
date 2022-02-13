@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 19:17:25 by siokim            #+#    #+#             */
-/*   Updated: 2022/02/12 17:36:46 by siokim           ###   ########.fr       */
+/*   Updated: 2022/02/13 17:25:56 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,14 @@
 # include <stdlib.h>
 # include <stdarg.h>
 
-size_t	ft_strlen(char *str);
+void	ft_putchar_fd(char c, int fd);
+size_t	ft_strlen(const char *s);
 void	ft_putstr_fd(char *s, int fd);
 char	*ft_itoa(int n);
-int	ft_printf(const char *args, ...);
 int	ft_toupper(int c);
+int	ft_printf(const char *args, ...);
+char	*unsigned_ft_itoa(unsigned int n);
+size_t	hex_print(unsigned int str, char isUpper);
+
 
 #endif

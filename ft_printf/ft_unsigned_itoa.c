@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_itoa.c                                          :+:      :+:    :+:   */
+/*   ft_unsigned_itoa.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/22 14:22:48 by siokim            #+#    #+#             */
-/*   Updated: 2022/02/13 16:31:17 by siokim           ###   ########.fr       */
+/*   Created: 2022/02/13 16:37:08 by siokim            #+#    #+#             */
+/*   Updated: 2022/02/13 16:38:08 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_printf.h"
 
-static size_t	numsize(int n)
+static size_t	numsize(unsigned int n)
 {
 	size_t	size;
 
@@ -27,11 +27,11 @@ static size_t	numsize(int n)
 	return (size);
 }
 
-char	*ft_itoa(int n)
+char	*unsigned_ft_itoa(unsigned int n)
 {
 	size_t	size;
 	char	*str;
-	long	num;
+	unsigned int	num;
 
 	size = numsize(n);
 	if (n < 0)
@@ -42,11 +42,6 @@ char	*ft_itoa(int n)
 	num = n;
 	if (num == 0)
 		str[0] = '0';
-	if (num < 0)
-	{
-		str[0] = '-';
-		num *= -1;
-	}
 	str[size] = 0;
 	while (num > 0)
 	{
@@ -55,3 +50,4 @@ char	*ft_itoa(int n)
 	}
 	return (str);
 }
+

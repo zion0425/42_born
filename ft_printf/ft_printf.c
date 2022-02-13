@@ -6,66 +6,48 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 19:17:20 by siokim            #+#    #+#             */
-/*   Updated: 2022/02/12 18:12:42 by siokim           ###   ########.fr       */
+/*   Updated: 2022/02/13 19:09:25 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-size_t	hex_size(unsigned int str)
+size_t	put_str_size(char *s)
 {
-	size_t	size;
-
-	size = 0;
-	while (str > 0)
-	{
-		str /= 16;
-		size ++;
-	}
-	return (size);
+	ft_putstr_fd(s, 1);
+	return (ft_strlen(s));
 }
 
-char	*hex_print(unsigned int str, char isUpper)
+size_t	put_char_size(char c)
 {
-	char 	*tmp_str;
-	size_t	i = 0;
-	tmp_str = 0;
-	tmp_str = malloc(sizeof(char) * hex_size(str));
-	while (str > 0)
-	{
-		if (isUpper)
-			tmp_str[i] = "0123456789ABCDEF"[str % 16];
-		else
-			tmp_str[i] = "0123456789abcdef"[str % 16];
-
-		i++;
-		str /= 16;
-	}
-	while (tmp_str[--i])
-		write(1, &tmp_str[i], 1);
-	free(tmp_str);
-	return (tmp_str);
+	ft_putchar_fd(c,  1);
+	return (1);
 }
 
-void	identify(va_list ap, const char *str, size_t i)
+size_t	identify(va_list ap, const char *str, size_t i)
 {
+	size_t	res_size;
+
+	res_size = 99;
 	if (str[i + 1] == 'd')
-		ft_putstr_fd(ft_itoa(va_arg(ap, int)), 1);
+		res_size = put_str_size(ft_itoa(va_arg(ap, int)));
 	if (str[i + 1] == 'i')
-		ft_putstr_fd(ft_itoa(va_arg(ap, int)), 1);
+		res_size = put_str_size(ft_itoa(va_arg(ap, int)));
 	if (str[i + 1] == 'c')
-		ft_putstr_fd(ft_itoa(va_arg(ap, int)), 1);
+		res_size = put_char_size(va_arg(ap, int));
 	if (str[i + 1] == 's')
-		ft_putstr_fd(va_arg(ap, char *), 1);
+		res_size = put_str_size(va_arg(ap, char *));
 	if (str[i + 1] == 'u')
-		ft_putstr_fd(ft_itoa(va_arg(ap, unsigned int)), 1);
+		res_size = put_str_size(unsigned_ft_itoa(va_arg(ap, unsigned int)));
 	if (str[i + 1] == '%')
-		ft_putstr_fd("%", 1);
+		res_size = put_char_size('%');
 	if (str[i + 1] == 'x')
-		hex_print(va_arg(ap, int), 0);
+		res_size = hex_print(va_arg(ap, unsigned int), 0);
 	if (str[i + 1] == 'X')
-		hex_print(va_arg(ap, int), 1);
-	//if (str[i + 1] == 'p')
+		res_size = hex_print(va_arg(ap, unsigned int), 1);
+	if (str[i + 1] == 'p')
+		res_size = hex_print(va_arg(ap, unsigned long long), 2);
+	return (res_size);
 	//else
 		//error
 }
@@ -73,9 +55,10 @@ void	identify(va_list ap, const char *str, size_t i)
 int	ft_printf(const char *str, ...)
 {
 	va_list	ap;
+	size_t	res_size;
 
+	res_size = 0;
 	va_start(ap, str);
-
 	size_t	i;
 	if (!str)
 		return (0);
@@ -83,54 +66,55 @@ int	ft_printf(const char *str, ...)
 	while (str[i])
 	{
 		if (str[i] == '%')
-			identify(ap, str, i++);
+			res_size += identify(ap, str, i++) - 1;
 		else
 			write(1, &str[i], 1);
 		i++;
-
 	}
-	return (0);
+	return (res_size + i - 1);
 }
 
 #include <stdio.h>
 
 int main()
 {
-	int a = 'A';
+	//char *a = "AB";
+	int	a = -122;
+	//char	a = 'A';
+
 	//%d는 10진수 숫자를 출력합니다.
-	printf("d : %d\n", a);
-	ft_printf("%d\n", a);
+	//printf("\nhi : %d", printf("%d\n",a));
+	//printf("\nhi : %d", ft_printf("%d\n", a));
 
-	//%i는 10진수 정수를 출력합니다.
-	printf("i : %i\n", a);
-	ft_printf("%i\n", a);
+	////%i는 10진수 정수를 출력합니다.
+	//printf("\nhi : %d", printf("%i\n",a));
+	//printf("\nhi : %d", ft_printf("%i\n", a));
 
-	//%c는 단일 문자 (character) 한 개를 출력합니다.
-	// char int 형 변환 필요..
-	printf("c : %c\n", a);
-	ft_printf("%c\n", a);
+	////%c는 단일 문자 (character) 한 개를 출력합니다.
+	//printf("\nhi : %d", printf("%c\n",a));
+	//printf("\nhi : %d", ft_printf("%c\n", a));
 
-	//%s는 문자열 (string) 을 출력합니다.
-	//seg fault
-	printf("s : %s\n", a);
-	ft_printf("%s\n", a);
+	////%s는 문자열 (string) 을 출력합니다.
+	//printf("\nhi : %d", printf("a%s\n",a));
+	//printf("\nhi : %d", ft_printf("a%s\n", a));
 
-	//%u는 부호 없는 10진수 숫자를 출력합니다.
-	printf("u : %u\n", a);
-	ft_printf("%u\n", a);
+	////%u는 부호 없는 10진수 숫자를 출력합니다.
+	//printf("\nhi : %d", printf("a%u\n",a));
+	//printf("\nhi : %d", ft_printf("a%u\n", a));
 
-	//%%는 퍼센트 기호 (%) 를 출력합니다.
-	printf("%% : %%\n");
-	ft_printf("%%\n");
+	////%%는 퍼센트 기호 (%) 를 출력합니다.
+	//printf("\nhi : %d", printf("a%%\n"));
+	//printf("\nhi : %d", ft_printf("a%%\n"));
 
-	//%x는 소문자를 사용하여 숫자를 16진수로 출력합니다.
-	printf("%x\n", &a);
-	ft_printf("%x\n", &a);
+	////%x는 소문자를 사용하여 숫자를 16진수로 출력합니다.
+	//printf("\nhi : %d", printf("a%x\n",a));
+	//printf("\nhi : %d", ft_printf("a%x\n", a));
 
-	//%X는 대문자를 사용하여 숫자를 16진수로 출력합니다.
-	printf("%X\n", &a);
-	ft_printf("%X\n", &a);
+	////%X는 대문자를 사용하여 숫자를 16진수로 출력합니다.
+	//printf("\nhi : %d", printf("a%X\n",a));
+	//printf("\nhi : %d", ft_printf("a%X\n", a));
 
 	//%p는 void * 형식의 포인터 인자를 16진수로 출력합니다.
-	printf("p : %p\n", &a);
+	printf("\nhi : %d", printf("a%p\n",&a));
+	printf("\nhi : %d", ft_printf("a%p\n", &a));
 }

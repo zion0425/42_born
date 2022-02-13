@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 22:21:31 by siokim            #+#    #+#             */
-/*   Updated: 2022/01/06 17:29:41 by siokim           ###   ########.fr       */
+/*   Updated: 2022/02/13 16:34:30 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,3 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 	}
 	return (list);
 }
-//

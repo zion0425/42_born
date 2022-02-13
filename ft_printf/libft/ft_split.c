@@ -6,13 +6,13 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 14:20:00 by siokim            #+#    #+#             */
-/*   Updated: 2022/01/07 16:30:50 by siokim           ###   ########.fr       */
+/*   Updated: 2022/02/13 16:34:39 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	arr2_cnt(const char *s, char c)
+static size_t	arr2_cnt(const char *s, char c)
 {
 	size_t	cnt;
 
@@ -35,7 +35,7 @@ size_t	arr2_cnt(const char *s, char c)
 	return (cnt);
 }
 
-size_t	arr1_cnt(const char *s, char c)
+static size_t	arr1_cnt(const char *s, char c)
 {
 	size_t	s_size;
 
@@ -48,7 +48,7 @@ size_t	arr1_cnt(const char *s, char c)
 	return (s_size - ft_strlen(s));
 }
 
-char	**malloc_free(char **s)
+static char	**malloc_free(char **s)
 {
 	int	i;
 
