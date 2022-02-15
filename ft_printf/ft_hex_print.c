@@ -6,13 +6,13 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 16:35:48 by siokim            #+#    #+#             */
-/*   Updated: 2022/02/13 19:08:54 by siokim           ###   ########.fr       */
+/*   Updated: 2022/02/14 22:37:13 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static size_t	hex_size(unsigned int str)
+static size_t	hex_size(unsigned long long str)
 {
 	size_t	size;
 
@@ -25,13 +25,15 @@ static size_t	hex_size(unsigned int str)
 	return (size);
 }
 
-size_t	hex_print(unsigned int str, char isUpper)
+size_t	hex_print(unsigned long long str, char isUpper)
 {
 	char 	*tmp_str;
 	size_t	i;
 	const size_t size = hex_size(str);
 
 	i = 0;
+	if (isUpper)
+		str = (unsigned long)str;
 	tmp_str = malloc(sizeof(char) * (size));
 	if (!tmp_str)
 		return (0);
@@ -50,6 +52,6 @@ size_t	hex_print(unsigned int str, char isUpper)
 		write(1, &tmp_str[i], 1);
 	free(tmp_str);
 	if (isUpper == 2)
-		return (size + 2);
+		return (unsigned long)(size + 2);
 	return (size);
 }
