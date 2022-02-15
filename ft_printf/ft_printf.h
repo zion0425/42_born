@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 19:17:25 by siokim            #+#    #+#             */
-/*   Updated: 2022/02/14 22:36:23 by siokim           ###   ########.fr       */
+/*   Updated: 2022/02/15 12:08:21 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,6 @@ char	*ft_itoa(int n);
 int	ft_toupper(int c);
 int	ft_printf(const char *args, ...);
 char	*unsigned_ft_itoa(unsigned long long n);
-size_t	hex_print(unsigned long long str, char isUpper)
+size_t	hex_print(unsigned long long str, char isUpper);
 
 #endif
