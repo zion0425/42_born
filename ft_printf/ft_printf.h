@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 19:17:25 by siokim            #+#    #+#             */
-/*   Updated: 2022/02/16 15:39:13 by siokim           ###   ########.fr       */
+/*   Updated: 2022/02/16 16:00:20 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,10 @@
 # include <stdlib.h>
 # include <stdarg.h>
 
-static size_t	hex_size(unsigned long long str);
-static size_t	put_hex(unsigned long long str, char isUpper);
-static size_t	numsize(unsigned int n);
-static size_t	identify(va_list ap, const char *str, size_t i);
-static size_t	put_char_size(char c);
-static size_t	put_str_size(char *s, char isFree);
+char			*ft_itoa(int n);
+size_t			ft_strlen(const char *s);
+void			ft_putstr_fd(char *s, int fd);
+void			ft_putchar_fd(char c, int fd);
 char			*unsigned_ft_itoa(unsigned long long n);
 int				ft_printf(const char *str, ...);
 size_t			hex_print(unsigned long long str, char isUpper);

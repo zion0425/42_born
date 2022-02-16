@@ -6,12 +6,12 @@
 #    By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/09 19:17:23 by siokim            #+#    #+#              #
-#    Updated: 2022/02/16 14:35:10 by siokim           ###   ########.fr        #
+#    Updated: 2022/02/16 16:00:26 by siokim           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = GCC
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = #-Wall -Wextra -Werror
 AR = ar
 ARFLAGS = -rc
 NAME = libftprintf.a
