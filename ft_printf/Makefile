@@ -6,7 +6,7 @@
 #    By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/09 19:17:23 by siokim            #+#    #+#              #
-#    Updated: 2022/02/15 20:46:21 by siokim           ###   ########.fr        #
+#    Updated: 2022/02/16 14:35:10 by siokim           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ $(NAME) : $(OBJS)
 	cp ./libft/$(LIB_NAME).a ./$(NAME)
 	#test
 	$(AR) $(ARFLAGS) $(NAME) $(OBJS)
-	#$(CC) $(CCFLAGS) $(NAME) $(OBJS)
+	# $(CC) $(CCFLAGS) $(NAME) $(OBJS)
 
 fclean: clean
 	#test

@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 21:25:53 by siokim            #+#    #+#             */
-/*   Updated: 2022/01/10 15:03:39 by siokim           ###   ########.fr       */
+/*   Updated: 2022/02/16 14:59:12 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	size_t			i;
+	size_t				i;
 	const unsigned char	*str1 = (unsigned char *)s1;
 	const unsigned char	*str2 = (unsigned char *)s2;
 

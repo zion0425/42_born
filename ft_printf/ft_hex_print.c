@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 16:35:48 by siokim            #+#    #+#             */
-/*   Updated: 2022/02/16 12:15:24 by siokim           ###   ########.fr       */
+/*   Updated: 2022/02/16 14:55:30 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ static size_t	hex_size(unsigned long long str)
 
 size_t	hex_print(unsigned long long str, char isUpper)
 {
-	char 	*tmp_str;
-	int	i;
+	char	*tmp_str;
+	int		i;
 	size_t	size;
 
 	size = hex_size(str);
@@ -39,7 +39,7 @@ size_t	hex_print(unsigned long long str, char isUpper)
 		write(1, "0x", 2);
 	if (str == 0)
 	{
-		write(1, "0" , 1);
+		write(1, "0", 1);
 		if (isUpper == 2)
 			return (3);
 		return (1);

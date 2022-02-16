@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 16:37:08 by siokim            #+#    #+#             */
-/*   Updated: 2022/02/15 19:04:45 by siokim           ###   ########.fr       */
+/*   Updated: 2022/02/16 14:57:54 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ static size_t	numsize(unsigned int n)
 
 char	*unsigned_ft_itoa(unsigned long long n)
 {
-	size_t	size;
-	char	*str;
+	size_t			size;
+	char			*str;
 	unsigned int	num;
 
 	size = numsize(n);
@@ -50,4 +50,3 @@ char	*unsigned_ft_itoa(unsigned long long n)
 	}
 	return (str);
 }
-
