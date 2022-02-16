@@ -6,13 +6,13 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 19:17:20 by siokim            #+#    #+#             */
-/*   Updated: 2022/02/16 14:56:38 by siokim           ###   ########.fr       */
+/*   Updated: 2022/02/16 15:38:19 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-size_t	put_str_size(char *s, char isFree)
+static size_t	put_str_size(char *s, char isFree)
 {
 	size_t	size;
 
@@ -28,13 +28,13 @@ size_t	put_str_size(char *s, char isFree)
 	return (size);
 }
 
-size_t	put_char_size(char c)
+static size_t	put_char_size(char c)
 {
 	ft_putchar_fd(c, 1);
 	return (1);
 }
 
-size_t	identify(va_list ap, const char *str, size_t i)
+static size_t	identify(va_list ap, const char *str, size_t i)
 {
 	size_t	res_size;
 
