@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 16:37:08 by siokim            #+#    #+#             */
-/*   Updated: 2022/02/16 15:37:46 by siokim           ###   ########.fr       */
+/*   Updated: 2022/02/19 13:41:13 by sion             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,10 @@ static size_t	numsize(unsigned int n)
 	return (size);
 }
 
-char	*unsigned_ft_itoa(unsigned long long n)
+char	*unsigned_ft_itoa(unsigned int n)
 {
 	size_t			size;
 	char			*str;
-	unsigned int	num;
 
 	size = numsize(n);
 	if (n < 0)
@@ -39,14 +38,13 @@ char	*unsigned_ft_itoa(unsigned long long n)
 	str = malloc(size + 1);
 	if (!str)
 		return (0);
-	num = n;
-	if (num == 0)
+	if (n == 0)
 		str[0] = '0';
 	str[size] = 0;
-	while (num > 0)
+	while (n > 0)
 	{
-		str[--size] = num % 10 + 48;
-		num /= 10;
+		str[--size] = n % 10 + 48;
+		n /= 10;
 	}
 	return (str);
 }
