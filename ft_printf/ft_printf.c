@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 19:17:20 by siokim            #+#    #+#             */
-/*   Updated: 2022/02/16 16:00:39 by siokim           ###   ########.fr       */
+/*   Updated: 2022/03/11 14:51:06 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,18 +41,18 @@ static size_t	identify(va_list ap, const char *str, size_t i)
 	res_size = 0;
 	if (str[i + 1] == 'd' || str[i + 1] == 'i')
 		res_size = put_str_size(ft_itoa(va_arg(ap, int)), 1);
-	if (str[i + 1] == 'c')
+	else if (str[i + 1] == 'c')
 		res_size = put_char_size(va_arg(ap, int));
-	if (str[i + 1] == 's')
+	else if (str[i + 1] == 's')
 		res_size = put_str_size(va_arg(ap, char *), 0);
-	if (str[i + 1] == 'u')
+	else if (str[i + 1] == 'u')
 		res_size = put_str_size(unsigned_ft_itoa(va_arg(ap, unsigned int)), 1);
-	if (str[i + 1] == '%')
+	else if (str[i + 1] == '%')
 		res_size = put_char_size('%');
-	if (str[i + 1] == 'x' || str[i + 1] == 'X')
+	else if (str[i + 1] == 'x' || str[i + 1] == 'X')
 		res_size = hex_print(va_arg(ap, unsigned int), (str[i + 1] == 'X'));
-	if (str[i + 1] == 'p')
-		res_size = hex_print(va_arg(ap, unsigned long long), 2);
+	else if (str[i + 1] == 'p')
+		res_size = hex_print(va_arg(ap, unsigned long), 2);
 	return (res_size);
 }
 
@@ -62,13 +62,11 @@ int	ft_printf(const char *str, ...)
 	size_t	res_size;
 	size_t	i;
 
-	res_size = 0;
+	if (!str || !str[0])
+		return (0);
 	va_start(ap, str);
-	if (!str)
-		return (0);
+	res_size = 0;
 	i = 0;
-	if (!str[i])
-		return (0);
 	while (str[i])
 	{
 		if (str[i] == '%')

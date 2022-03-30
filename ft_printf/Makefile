@@ -6,10 +6,12 @@
 #    By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/09 19:17:23 by siokim            #+#    #+#              #
-#    Updated: 2022/02/19 13:38:14 by sion             ###   ########.fr        #
+#    Updated: 2022/03/11 14:50:53 by siokim           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+CC = gcc
+CFLAGS = -Wextra -Werror -Wall
 AR = ar
 ARFLAGS = -rc
 NAME = libftprintf.a
@@ -23,7 +25,7 @@ all: $(NAME)
 
 $(NAME) : $(OBJS)
 	make all -C $(LIB_NAME)
-	cp $(LIB_NAME)/$(LIB_NAME).a ./$(NAME)
+	cp ./$(LIB_NAME)/$(LIB_NAME).a ./$(NAME)
 	$(AR) $(ARFLAGS) $(NAME) $(OBJS)
 
 fclean: clean

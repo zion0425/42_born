@@ -6,13 +6,13 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 16:35:48 by siokim            #+#    #+#             */
-/*   Updated: 2022/02/16 15:37:33 by siokim           ###   ########.fr       */
+/*   Updated: 2022/03/11 14:15:21 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static size_t	hex_size(unsigned long long str)
+static size_t	hex_size(unsigned long str)
 {
 	size_t	size;
 
@@ -25,31 +25,27 @@ static size_t	hex_size(unsigned long long str)
 	return (size);
 }
 
-static size_t	put_hex(unsigned long long str, char isUpper)
+static void	put_hex(unsigned long str, char isUpper)
 {
 	size_t	size;
 
 	size = 0;
-	if (isUpper != 2)
-		str = (unsigned int)str;
 	if (str > 0)
 	{
 		if (isUpper == 1)
 		{
-			size += put_hex(str / 16, isUpper);
+			put_hex(str / 16, isUpper);
 			write(1, &"0123456789ABCDEF"[str % 16], 1);
 		}
 		else
 		{
-			size += put_hex(str / 16, isUpper);
+			put_hex(str / 16, isUpper);
 			write(1, &"0123456789abcdef"[str % 16], 1);
 		}
-		size++;
 	}
-	return (size);
 }
 
-size_t	hex_print(unsigned long long str, char isUpper)
+size_t	hex_print(unsigned long str, char isUpper)
 {
 	int		i;
 	size_t	size;
@@ -57,16 +53,16 @@ size_t	hex_print(unsigned long long str, char isUpper)
 	size = hex_size(str);
 	i = 0;
 	if (isUpper == 2)
+	{
 		write(1, "0x", 2);
+		size += 2;
+	}
 	if (str == 0)
 	{
 		write(1, "0", 1);
-		if (isUpper == 2)
-			return (3);
-		return (1);
+		size ++;
+		return (size);
 	}
-	size = put_hex(str, isUpper);
-	if (isUpper == 2)
-		size += 2;
+	put_hex(str, isUpper);
 	return (size);
 }
