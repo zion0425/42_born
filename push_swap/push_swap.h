@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 15:13:48 by siokim            #+#    #+#             */
-/*   Updated: 2022/05/24 17:34:47 by siokim           ###   ########.fr       */
+/*   Updated: 2022/06/02 13:04:14 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,10 @@ void	ft_lstdelone(t_list *lst, void (*del)(void *));
 void	ft_lstclear(t_list **lst, void (*del)(void *));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
-int	ft_isdigit(int c);
-
+int		ft_isdigit(int c);
+int		ft_atoi(const char *str);
+void		ft_putstr_fd(char *s, int fd);
+int		ft_strncmp(const char *s1, const char *s2, size_t n);
+char		**ft_split(char const *s, char c);
 
 #endif

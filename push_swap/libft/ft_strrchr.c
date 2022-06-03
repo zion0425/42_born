@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 15:19:06 by siokim            #+#    #+#             */
-/*   Updated: 2022/01/10 15:04:43 by siokim           ###   ########.fr       */
+/*   Updated: 2022/05/30 16:03:52 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 
 char	*ft_strrchr(const char *s, int c)
 {
-	int	size;
+	int			size;
 	const char	mem_c = (char)c;
+
 	size = (int)ft_strlen(s);
 	if (!mem_c)
 		return ((char *)(s + size));

@@ -6,13 +6,13 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 14:22:48 by siokim            #+#    #+#             */
-/*   Updated: 2021/12/29 14:27:26 by siokim           ###   ########.fr       */
+/*   Updated: 2022/05/30 15:22:59 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	numsize(int n)
+static size_t	numsize(int n)
 {
 	size_t	size;
 

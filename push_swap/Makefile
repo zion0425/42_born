@@ -6,7 +6,7 @@
 #    By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/20 15:13:42 by siokim            #+#    #+#              #
-#    Updated: 2022/05/27 04:18:39 by sion             ###   ########.fr        #
+#    Updated: 2022/06/02 14:01:44 by siokim           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ CC = gcc
 CCFLAGS = -o #-Werror -Wextra -Wall
 LIB_NAME = libft
 
-SRCS = push_swap.c
+SRCS = push_swap.c input_check.c
 OBJS = $(SRCS:.c=.o)
 NAME = push_swap
 
@@ -28,8 +28,7 @@ $(NAME) : $(OBJS)
 	chmod 755 $(NAME)
 
 fclean: clean
-	make fclean -C $(LIB_NAME)
-	rm -f $(NAME)
+	rm -f $(NAME) $(LIB_NAME).a
 
 clean:
 	make clean -C $(LIB_NAME)
