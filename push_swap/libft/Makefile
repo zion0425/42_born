@@ -6,7 +6,7 @@
 #    By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/09 04:40:59 by siokim            #+#    #+#              #
-#    Updated: 2022/01/07 16:54:08 by siokim           ###   ########.fr        #
+#    Updated: 2022/06/09 21:42:58 by siokim           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ SRCS = ft_bzero.c ft_isalnum.c ft_isalpha.c \
 
 B_SRCS = ft_lstnew.c ft_lstadd_front.c ft_lstsize.c \
 			ft_lstlast.c ft_lstadd_back.c ft_lstdelone.c \
-			ft_lstclear.c ft_lstiter.c ft_lstmap.c
+			ft_lstclear.c ft_lstiter.c ft_lstmap.c ft_lstbeforelast.c
 
 OBJS = $(SRCS:.c=.o)
 B_OBJS = $(B_SRCS:.c=.o)

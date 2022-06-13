@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 21:35:07 by sion              #+#    #+#             */
-/*   Updated: 2022/01/01 19:42:55 by siokim           ###   ########.fr       */
+/*   Updated: 2022/06/09 21:43:07 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,5 +67,6 @@ void	ft_lstdelone(t_list *lst, void (*del)(void *));
 void	ft_lstclear(t_list **lst, void (*del)(void *));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
+t_list	*ft_lstbeforelast(t_list *lst);
 
 #endif

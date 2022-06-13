@@ -6,29 +6,32 @@
 #    By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/20 15:13:42 by siokim            #+#    #+#              #
-#    Updated: 2022/06/02 14:01:44 by siokim           ###   ########.fr        #
+#    Updated: 2022/06/13 14:31:04 by siokim           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
-CCFLAGS = -o #-Werror -Wextra -Wall
-LIB_NAME = libft
 
-SRCS = push_swap.c input_check.c
+LIBS = ./libft/libft.a
+LIB_NAME = libft
+CFLAGS = -Werror -Wextra -Wall -g
+
 OBJS = $(SRCS:.c=.o)
+SRCS = push_swap.c input_check.c sort_stack.c find_pivot.c
+
 NAME = push_swap
 
 .PHONY:all clean fclean re
+
 all: $(NAME)
 
 $(NAME) : $(OBJS)
 	make all -C $(LIB_NAME)
-	mv $(LIB_NAME)/$(LIB_NAME).a ./
-	$(CC) $(CCFLAGS) $(NAME) $(OBJS) $(LIB_NAME).a
-	chmod 755 $(NAME)
+	make bonus -C $(LIB_NAME)
+	$(CC) $(CFLAGS) -o $@ $^ $(LIBS)
 
 fclean: clean
-	rm -f $(NAME) $(LIB_NAME).a
+	rm -f $(NAME) $(LIBS)
 
 clean:
 	make clean -C $(LIB_NAME)

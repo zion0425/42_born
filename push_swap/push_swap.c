@@ -6,86 +6,93 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 15:13:46 by siokim            #+#    #+#             */
-/*   Updated: 2022/06/02 14:01:48 by siokim           ###   ########.fr       */
+/*   Updated: 2022/06/13 22:47:11 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-char	**malloc_free(char **s)
+void	two_arr_malloc_free(char **s)
 {
 	int	i;
 
 	i = 0;
 	while (s[i])
-		free(s[i++]);
+	{
+		free(s[i]);
+		s[i++] = 0;
+	}
 	free(s);
-	return (0);
+	s = 0;
 }
 
-t_list	**create_StackA(int argc, char **argv)
+void	malloc_free(t_list *s)
 {
-	size_t	i;
-	size_t	j;
-	char **tmpSplitValue;
-	t_list **stackA;
-	t_list *tmpListValue;
+	free(s);
+	s = 0;
+}
 
-	stackA = ft_lstnew(0);
+char	is_cmp_values(t_list *stack_a)
+{
+	t_list	*tmp;
+	t_list	*cur;
+
+	cur = stack_a;
+	while (cur->next)
+	{
+		tmp = cur->next;
+		while (tmp)
+		{
+			if (cur->data == tmp->data)
+				return (INPUT_ERROR);
+			tmp = tmp->next;
+		}
+		cur = cur->next;
+	}
+	return (INPUT_SUCCESS);
+}
+
+t_list	*create_stack_a(int argc, char **argv)
+{
+	int		i;
+	int		j;
+	char	**tmp_split_value;
+	t_list	*stack_a;
+	t_list	*tmp_list_value;
+
 	i = 1;
+	stack_a = malloc(sizeof(t_list));
+	stack_a = 0;
 	while (i < argc)
 	{
-		tmpSplitValue = ft_split(argv[i++], ' ');
+		tmp_split_value = ft_split(argv[i++], ' ');
 		j = 0;
-		while (*tmpSplitValue[j])
-			if (input_check(tmpSplitValue[j++]) == INPUT_ERROR)
-				printError(stackA);
-		if (strCmp(stackA))
-			printError(stackA);
-		if (j == 0)
-			printError(stackA);
-		tmpListValue = ft_lstnew(tmpSplitValue[i]);
-		ft_lstadd_front(stackA, tmpListValue);
-		malloc_free(tmpSplitValue);
-		free(tmpListValue);
+		while (tmp_split_value[j])
+		{
+			tmp_list_value = ft_lstnew(input_check(tmp_split_value[j]));
+			ft_lstadd_back(&stack_a, tmp_list_value);
+			j++;
+		}
+		two_arr_malloc_free(tmp_split_value);
+		if (j == 0 || is_cmp_values(stack_a) == INPUT_ERROR)
+			print_error_exit_program();
 	}
+	return (stack_a);
 }
 
-#include <stdio.h>
 int	main(int argc, char **argv)
 {
-	t_list **stackA;
-	if (argv > 1)
-		stackA = create_StackA(argc, argv);
+	t_list	*stack_a=0;
+	t_list	*stack_b;
+	int		pivot;
+
+	if (argc > 1)
+		stack_a = create_stack_a(argc, argv);
+	stack_b = malloc(sizeof(t_list));
+	pivot = find_pivot(stack_a);
 }
 
-//int	check_stack(int stack_no, t_list *stackA, t_list *stackB)
-//{
-//	if (stack_no == BOTH_STACKNO || stack_no == A_STACKNO)
-//		if (!ft_lstsize(stackA))
-//			return (INPUT_ERROR);
-//	if (stack_no == BOTH_STACKNO || stack_no == B_STACKNO)
-//		if (!ft_lstsize(stackB))
-//			return (INPUT_ERROR);
-//	return(INPUT_SUCCESS);
-//}
-
-//int	swap_argv(int stack_no, t_list *stackA, t_list *stackB)
-//{
-//	return (INPUT_ERROR);
-//}
-
-//int	push_argv(int stack_no, t_list *stackA, t_list *stackB)
-//{
-//	return (INPUT_ERROR);
-//}
-
-//int	rotate_argv(int stack_no, t_list *stackA, t_list *stackB)
-//{
-//	return (INPUT_ERROR);
-//}
-
-//int	reverse_rotate_argv(int stack_no, t_list *stackA, t_list *stackB)
-//{
-//	return (INPUT_ERROR);
-//}
+	//push_argv(A_STACKNO, &stack_a, &stack_b);
+	//swap_argv(B_STACKNO, &stack_a, &stack_b);
+	//rotate_argv(A_STACKNO, &stack_a, &stack_b);
+	//reverse_rotate_argv(A_STACKNO, &stack_a, &stack_b);

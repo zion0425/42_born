@@ -1,21 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
+/*   ft_lstbeforelast.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/25 21:52:38 by siokim            #+#    #+#             */
-/*   Updated: 2022/06/08 13:15:26 by siokim           ###   ########.fr       */
+/*   Created: 2022/06/09 21:42:22 by siokim            #+#    #+#             */
+/*   Updated: 2022/06/09 21:42:29 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstadd_back(t_list **lst, t_list *new)
+t_list	*ft_lstbeforelast(t_list *lst)
 {
-	if (!*lst)
-		*lst = new;
-	else
-		ft_lstlast(*lst)->next = new;
+	while (lst -> next -> next)
+		lst = lst -> next;
+	return (lst);
 }
