@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 13:29:21 by siokim            #+#    #+#             */
-/*   Updated: 2022/06/13 22:49:53 by siokim           ###   ########.fr       */
+/*   Updated: 2022/06/15 16:36:53 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ void	rotate_argv(char stack_no, t_list **stack_a, t_list **stack_b)
 
 	if (stack_no == A_STACKNO || stack_no == BOTH_STACKNO)
 	{
+		if (check_stack(2, *stack_a) == INPUT_ERROR)
+			return ;
 		tmp = (*stack_a)->next;
 		(*stack_a)->next = 0;
 		ft_lstlast(tmp)->next = *stack_a;
@@ -88,6 +90,8 @@ void	rotate_argv(char stack_no, t_list **stack_a, t_list **stack_b)
 	}
 	if (stack_no == B_STACKNO || stack_no == BOTH_STACKNO)
 	{
+		if (check_stack(2, *stack_b) == INPUT_ERROR)
+			return ;
 		tmp = (*stack_b)->next;
 		(*stack_b)->next = 0;
 		ft_lstlast(tmp)->next = *stack_b;
@@ -107,6 +111,8 @@ void	reverse_rotate_argv(char stack_no, t_list **stack_a, t_list **stack_b)
 
 	if (stack_no == A_STACKNO || stack_no == BOTH_STACKNO)
 	{
+		if (check_stack(2, *stack_a))
+			return ;
 		tmp = ft_lstlast(*stack_a);
 		ft_lstbeforelast(*stack_a)->next = 0;
 		tmp->next = *stack_a;
@@ -114,6 +120,8 @@ void	reverse_rotate_argv(char stack_no, t_list **stack_a, t_list **stack_b)
 	}
 	if (stack_no == B_STACKNO || stack_no == BOTH_STACKNO)
 	{
+		if (check_stack(2, *stack_b))
+			return ;
 		tmp = (*stack_b)->next;
 		(*stack_b)->next = 0;
 		ft_lstlast(tmp)->next = *stack_b;
