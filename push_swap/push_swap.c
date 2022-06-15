@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 15:13:46 by siokim            #+#    #+#             */
-/*   Updated: 2022/06/13 22:47:11 by siokim           ###   ########.fr       */
+/*   Updated: 2022/06/14 15:34:10 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,14 +82,13 @@ t_list	*create_stack_a(int argc, char **argv)
 
 int	main(int argc, char **argv)
 {
-	t_list	*stack_a=0;
-	t_list	*stack_b;
-	int		pivot;
+	t_list	*stack_a;
 
 	if (argc > 1)
+	{
 		stack_a = create_stack_a(argc, argv);
-	stack_b = malloc(sizeof(t_list));
-	pivot = find_pivot(stack_a);
+		real_sorting(&stack_a);
+	}
 }
 
 	//push_argv(A_STACKNO, &stack_a, &stack_b);

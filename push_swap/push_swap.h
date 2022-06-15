@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 15:13:48 by siokim            #+#    #+#             */
-/*   Updated: 2022/06/13 19:13:00 by siokim           ###   ########.fr       */
+/*   Updated: 2022/06/14 20:49:03 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,8 @@ void	rotate_argv(char stack_no, t_list **stack_a, t_list **stack_b);
 void	reverse_rotate_argv(char stack_no, t_list **stack_a, t_list **stack_b);
 void	push_argv(char stack_no, t_list **stack_a, t_list **stack_b);
 int		find_pivot(t_list *stack_a);
+void	real_sorting(t_list **a);
+void	btoa(t_list **a, t_list **b, int size);
+void	atob(t_list **a, t_list **b, int size);
 
 #endif

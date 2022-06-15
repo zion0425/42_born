@@ -6,7 +6,7 @@
 #    By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/20 15:13:42 by siokim            #+#    #+#              #
-#    Updated: 2022/06/13 14:31:04 by siokim           ###   ########.fr        #
+#    Updated: 2022/06/14 20:49:28 by siokim           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,8 @@ LIB_NAME = libft
 CFLAGS = -Werror -Wextra -Wall -g
 
 OBJS = $(SRCS:.c=.o)
-SRCS = push_swap.c input_check.c sort_stack.c find_pivot.c
+SRCS = push_swap.c input_check.c sort_stack.c \
+		find_pivot.c real_sorting.c
 
 NAME = push_swap
 

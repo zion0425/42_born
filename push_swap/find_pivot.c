@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 15:56:43 by siokim            #+#    #+#             */
-/*   Updated: 2022/06/13 23:02:48 by siokim           ###   ########.fr       */
+/*   Updated: 2022/06/14 09:47:50 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	*stack_to_arr(t_list *stack)
 	return (arr);
 }
 
-void	get_pivot(int *arr, int left, int right)
+void	quick_sort(int *arr, int left, int right)
 {
 	int	pivot;
 	int	low;
@@ -48,17 +48,17 @@ void	get_pivot(int *arr, int left, int right)
 	pivot = arr[(left + right) / 2];
 	while (low < high)
 	{
-		while (arr[low] < pivot && low <= right)
+		while (arr[low] < pivot)
 			low++;
-		while (arr[high] > pivot && high >= left)
+		while (arr[high] > pivot)
 			high--;
-		if (low < high)
+		if (low <= high)
 			swap(&arr[low++], &arr[high--]);
 	}
 	if (left < high)
-		get_pivot(arr, left, high);
-	if (left < low)
-		get_pivot(arr, low, right);
+		quick_sort(arr, left, high);
+	if (right > low)
+		quick_sort(arr, low, right);
 }
 
 int	find_pivot(t_list *stack_a)
@@ -68,6 +68,6 @@ int	find_pivot(t_list *stack_a)
 
 	size = ft_lstsize(stack_a);
 	arr = stack_to_arr(stack_a);
-	get_pivot(arr, 0, size - 1);
+	quick_sort(arr, 0, size - 1);
 	return (arr[size / 2]);
 }
