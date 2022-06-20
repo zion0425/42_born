@@ -6,7 +6,7 @@
 #    By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/20 15:13:42 by siokim            #+#    #+#              #
-#    Updated: 2022/06/14 20:49:28 by siokim           ###   ########.fr        #
+#    Updated: 2022/06/20 01:19:50 by siokim           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,8 +18,10 @@ CFLAGS = -Werror -Wextra -Wall -g
 
 OBJS = $(SRCS:.c=.o)
 SRCS = push_swap.c input_check.c sort_stack.c \
-		find_pivot.c real_sorting.c
+		find_pivot.c real_sorting.c reverse_rotate_argv.c
 
+#reverse_rotate_argv.c \
+#		sort_five_or_less.c
 NAME = push_swap
 
 .PHONY:all clean fclean re

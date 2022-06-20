@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 15:13:48 by siokim            #+#    #+#             */
-/*   Updated: 2022/06/15 16:19:13 by siokim           ###   ########.fr       */
+/*   Updated: 2022/06/20 17:02:05 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,20 +30,14 @@ typedef struct s_list
 }	t_list;
 
 t_list	*ft_lstnew(int data);
-void	ft_lstadd_front(t_list **lst, t_list *new);
 int		ft_lstsize(t_list *lst);
 t_list	*ft_lstlast(t_list *lst);
 void	ft_lstadd_back(t_list **lst, t_list *new);
-void	ft_lstdelone(t_list *lst, void (*del)(void *));
-void	ft_lstclear(t_list **lst, void (*del)(void *));
-void	ft_lstiter(t_list *lst, void (*f)(void *));
-t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 t_list	*ft_lstbeforelast(t_list *lst);
 
 int		ft_isdigit(int c);
 int		ft_atoi(const char *str);
 void	ft_putstr_fd(char *s, int fd);
-int		ft_strncmp(const char *s1, const char *s2, size_t n);
 char	**ft_split(char const *s, char c);
 int		input_check(char *tmpSplitValue);
 void	print_error_exit_program(void);
@@ -52,9 +46,14 @@ void	swap_argv(char stack_no, t_list **stack_a, t_list **stack_b);
 void	rotate_argv(char stack_no, t_list **stack_a, t_list **stack_b);
 void	reverse_rotate_argv(char stack_no, t_list **stack_a, t_list **stack_b);
 void	push_argv(char stack_no, t_list **stack_a, t_list **stack_b);
-int		find_pivot(t_list *stack_a, char f);
+int		find_pivot(t_list *stack_a, int left, int right ,char f);
 void	real_sorting(t_list **a);
-void	btoa(t_list **a, t_list **b, int size);
+int		check_stack(int size, t_list *stack);
 void	atob(t_list **a, t_list **b, int size);
+void	btoa(t_list **a, t_list **b, int size);
+void	sort_five_arg(t_list **a, t_list **b);
+void	sort_three_arg(t_list **stack, int fir, int sec, int trd);
+void	sort_two_arg(char stack_no, t_list **stack);
+void	reverse_rotate_argv(char stack_no, t_list **stack_a, t_list **stack_b);
 
 #endif
