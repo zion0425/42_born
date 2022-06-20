@@ -6,67 +6,11 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 15:05:48 by siokim            #+#    #+#             */
-/*   Updated: 2022/06/20 17:04:27 by siokim           ###   ########.fr       */
+/*   Updated: 2022/06/21 07:57:01 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-void	sort_two_arg(char stack_no, t_list **stack)
-{
-	if ((*stack)->data > (*stack)->next->data)
-		swap_argv(stack_no, stack, stack);
-}
-
-void	sort_three_arg(t_list **stack, int fir, int sec, int trd)
-{
-	if (fir < sec && fir < trd)
-	{
-		if (sec > trd)
-		{
-			swap_argv(A_STACKNO, stack, 0);
-			rotate_argv(A_STACKNO, stack, 0);
-		}
-	}
-	else if (sec < fir && sec < trd)
-	{
-		if (fir > trd)
-			rotate_argv(A_STACKNO, stack, 0);
-		else
-			swap_argv(A_STACKNO, stack, 0);
-	}
-	else if (trd < fir && trd < sec)
-	{
-		if (fir > sec)
-		{
-			swap_argv(A_STACKNO, stack, 0);
-			reverse_rotate_argv(A_STACKNO, stack, 0);
-		}
-		else
-			reverse_rotate_argv(A_STACKNO, stack, 0);
-	}
-}
-
-void	sort_five_arg(t_list **a, t_list **b)
-{
-	int	pivot;
-	pivot = find_pivot(*a, 0, 3, '3');
-
-	while (ft_lstsize(*a) > 3)
-	{
-		if ((*a)->data > pivot)
-			push_argv(B_STACKNO, a, b);
-		else
-			rotate_argv(A_STACKNO, a, b);
-	}
-	sort_three_arg(a, (*a)->data, (*a)->next->data, (*a)->next->next->data);
-	sort_two_arg(B_STACKNO, b);
-	while (ft_lstsize(*b) > 0)
-	{
-		push_argv(A_STACKNO, a, b);
-		rotate_argv(A_STACKNO, a, 0);
-	}
-}
 
 void	stack_reverse_rotate(t_list **a, t_list **b, int ra_cnt, int rb_cnt)
 {
@@ -82,74 +26,6 @@ void	stack_reverse_rotate(t_list **a, t_list **b, int ra_cnt, int rb_cnt)
 		reverse_rotate_argv(B_STACKNO, a, b);
 }
 
-//void	btoa(t_list **a, t_list **b, int size)
-//{
-//	int	pivot;
-//	int	rb_cnt;
-//	int	pa_cnt;
-
-//	if (size <= 1)
-//		return push_argv(A_STACKNO, a, b);
-//	rb_cnt = 0;
-//	pa_cnt = 0;
-//	pivot = find_pivot(*a, '3');
-//	while (size--)
-//	{
-//		if ((*b)->data < pivot)
-//		{
-//			rotate_argv(B_STACKNO, a, b);
-//			rb_cnt++;
-//		}
-//		else
-//		{
-//			push_argv(A_STACKNO, a, b);
-//			pa_cnt++;
-//		}
-//	}
-//	int	i;
-//	i = 0;
-
-//	while (i++ < rb_cnt)
-//		reverse_rotate_argv(B_STACKNO, a, b);
-//	atob(a, b, pa_cnt);
-//	btoa(a, b, rb_cnt);
-//}
-
-//void	atob(t_list **a, t_list **b, int size)
-//{
-//	int	pivot;
-//	int	ra_cnt;
-//	int	pb_cnt;
-
-//	if (size <= 1)
-//		return ;
-//	if (size == 2)
-//		return (sort_two_arg(A_STACKNO, a));
-//	ra_cnt = 0;
-//	pb_cnt = 0;
-//	pivot = find_pivot(*a, '3');
-//	while (size--)
-//	{
-//		if ((*a)->data > pivot)
-//		{
-//			rotate_argv(A_STACKNO, a, b);
-//			ra_cnt++;
-//		}
-//		else
-//		{
-//			push_argv(B_STACKNO, a, b);
-//			pb_cnt++;
-//		}
-//	}
-//	int	i;
-//	i = 0;
-
-//	while (i++ < ra_cnt)
-//		reverse_rotate_argv(A_STACKNO, a, b);
-//	atob(a, b, ra_cnt);
-//	btoa(a, b, pb_cnt);
-//}
-
 void	btoa(t_list **a, t_list **b, int size)
 {
 	int	first_pivot;
@@ -158,6 +34,7 @@ void	btoa(t_list **a, t_list **b, int size)
 	int	pa_cnt;
 	int	rb_cnt;
 
+	char isend_init
 	if (size < 1)
 		return ;
 	else if (size == 1)
@@ -177,42 +54,32 @@ void	btoa(t_list **a, t_list **b, int size)
 	while (size--)
 	{
 		if ((*b)->data < first_pivot)
-		{
-			rotate_argv(B_STACKNO, a, b);
-			rb_cnt ++;
-		}
+			rb_cnt += rotate_argv(B_STACKNO, a, b);
 		else
 		{
-			push_argv(A_STACKNO, a, b);
-			pa_cnt++;
+			pa_cnt += push_argv(A_STACKNO, a, b);
 			if ((*a)->data < second_pivot)
-			{
-				rotate_argv(A_STACKNO, a, b);
-				ra_cnt++;
-			}
+				ra_cnt += rotate_argv(A_STACKNO, a, b);
 		}
 	}
 	atob(a, b, pa_cnt - ra_cnt);
 	stack_reverse_rotate(a, b, ra_cnt, rb_cnt);
 	atob(a, b, ra_cnt);
 	btoa(a, b, rb_cnt);
-
 }
 
 void	atob(t_list **a, t_list **b, int size)
 {
-	int 	first_pivot;
-	int 	second_pivot;
+	int	first_pivot;
+	int	second_pivot;
 	int	ra_cnt;
 	int	pb_cnt;
 	int	rb_cnt;
 
-	if (size <= 1)
+	if (size == 1)
 		return ;
 	else if (size == 2)
 		return (sort_two_arg(A_STACKNO, a));
-	//else if (size == 3)
-	//	return (sort_three_arg(a, (*a)->data, (*a)->next->data, (*a)->next->next->data));
 	first_pivot = find_pivot(*a, 0, size, '1');
 	second_pivot = find_pivot(*a, 0, size, '2');
 	ra_cnt = 0;
@@ -221,19 +88,12 @@ void	atob(t_list **a, t_list **b, int size)
 	while (size--)
 	{
 		if ((*a)->data >= second_pivot)
-		{
-			rotate_argv(A_STACKNO, a, b);
-			ra_cnt ++;
-		}
+			ra_cnt += rotate_argv(A_STACKNO, a, b);
 		else
 		{
-			push_argv(B_STACKNO, a, b);
-			pb_cnt++;
+			pb_cnt += push_argv(B_STACKNO, a, b);
 			if ((*b)->data >= first_pivot)
-			{
-				rotate_argv(B_STACKNO, a, b);
-				rb_cnt++;
-			}
+				rb_cnt += rotate_argv(B_STACKNO, a, b);
 		}
 	}
 	stack_reverse_rotate(a, b, ra_cnt, rb_cnt);

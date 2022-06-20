@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 01:19:20 by siokim            #+#    #+#             */
-/*   Updated: 2022/06/20 02:31:35 by siokim           ###   ########.fr       */
+/*   Updated: 2022/06/21 07:37:10 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	reverse_rotate_stack(t_list **stack)
 	return (INPUT_SUCCESS);
 }
 
-void	reverse_rotate_argv(char stack_no, t_list **stack_a, t_list **stack_b)
+int	reverse_rotate_argv(char stack_no, t_list **stack_a, t_list **stack_b)
 {
 	if (stack_no == A_STACKNO || stack_no == BOTH_STACKNO)
 		if (check_stack(2, *stack_a) == INPUT_SUCCESS)
@@ -44,4 +44,5 @@ void	reverse_rotate_argv(char stack_no, t_list **stack_a, t_list **stack_b)
 		ft_putstr_fd("rrb\n", STDOUT_FILENO);
 	else
 		ft_putstr_fd("rrr\n", STDOUT_FILENO);
+	return (1);
 }

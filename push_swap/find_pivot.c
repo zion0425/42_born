@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 15:56:43 by siokim            #+#    #+#             */
-/*   Updated: 2022/06/20 17:01:52 by siokim           ###   ########.fr       */
+/*   Updated: 2022/06/21 06:37:24 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	quick_sort(int *arr, int left, int right)
 		quick_sort(arr, low, right);
 }
 
-int	find_pivot(t_list *stack_a, int left, int right ,char f)
+int	find_pivot(t_list *stack_a, int left, int right, char f)
 {
 	int		*arr;
 	int		pivot;

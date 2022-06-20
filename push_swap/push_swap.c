@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 15:13:46 by siokim            #+#    #+#             */
-/*   Updated: 2022/06/20 17:04:41 by siokim           ###   ########.fr       */
+/*   Updated: 2022/06/21 06:33:29 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,16 +79,14 @@ t_list	*create_stack_a(int argc, char **argv)
 	}
 	return (stack_a);
 }
-#include <stdio.h>
 
 int	main(int argc, char **argv)
 {
-	t_list	*stack_a=0;
+	t_list	*stack_a;
 
 	if (argc > 1)
 	{
 		stack_a = create_stack_a(argc, argv);
 		real_sorting(&stack_a);
 	}
-
 }

@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 15:13:48 by siokim            #+#    #+#             */
-/*   Updated: 2022/06/20 17:02:05 by siokim           ###   ########.fr       */
+/*   Updated: 2022/06/21 07:57:14 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,18 +42,17 @@ char	**ft_split(char const *s, char c);
 int		input_check(char *tmpSplitValue);
 void	print_error_exit_program(void);
 
-void	swap_argv(char stack_no, t_list **stack_a, t_list **stack_b);
-void	rotate_argv(char stack_no, t_list **stack_a, t_list **stack_b);
-void	reverse_rotate_argv(char stack_no, t_list **stack_a, t_list **stack_b);
-void	push_argv(char stack_no, t_list **stack_a, t_list **stack_b);
-int		find_pivot(t_list *stack_a, int left, int right ,char f);
+int		rotate_argv(char stack_no, t_list **stack_a, t_list **stack_b);
+int		swap_argv(char stack_no, t_list **stack_a, t_list **stack_b);
+int		reverse_rotate_argv(char stack_no, t_list **stack_a, t_list **stack_b);
+int		push_argv(char stack_no, t_list **stack_a, t_list **stack_b);
 void	real_sorting(t_list **a);
-int		check_stack(int size, t_list *stack);
 void	atob(t_list **a, t_list **b, int size);
 void	btoa(t_list **a, t_list **b, int size);
 void	sort_five_arg(t_list **a, t_list **b);
 void	sort_three_arg(t_list **stack, int fir, int sec, int trd);
 void	sort_two_arg(char stack_no, t_list **stack);
-void	reverse_rotate_argv(char stack_no, t_list **stack_a, t_list **stack_b);
+int		find_pivot(t_list *stack_a, int left, int right, char f);
+int		check_stack(int size, t_list *stack);
 
 #endif
