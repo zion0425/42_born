@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 15:05:48 by siokim            #+#    #+#             */
-/*   Updated: 2022/06/21 07:57:01 by siokim           ###   ########.fr       */
+/*   Updated: 2022/06/21 18:07:00 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,80 +26,91 @@ void	stack_reverse_rotate(t_list **a, t_list **b, int ra_cnt, int rb_cnt)
 		reverse_rotate_argv(B_STACKNO, a, b);
 }
 
-void	btoa(t_list **a, t_list **b, int size)
+char	escape_loop(t_list **a, t_list **b, int size, char format)
 {
-	int	first_pivot;
-	int	second_pivot;
-	int	ra_cnt;
-	int	pa_cnt;
-	int	rb_cnt;
+	char	res;
 
-	char isend_init
-	if (size < 1)
-		return ;
-	else if (size == 1)
-		return ((void)push_argv(A_STACKNO, a, b));
-	else if (size == 2)
+	res = 0;
+	if (format == 'b' && size <= 2)
 	{
-		if ((*b)->data < (*b)->next->data)
-			swap_argv(B_STACKNO, a, b);
-		push_argv(A_STACKNO, a, b);
-		return ((void)(push_argv(A_STACKNO, a, b)));
-	}
-	first_pivot = find_pivot(*b, 0, size, '1');
-	second_pivot = find_pivot(*b, 0, size, '2');
-	ra_cnt = 0;
-	pa_cnt = 0;
-	rb_cnt = 0;
-	while (size--)
-	{
-		if ((*b)->data < first_pivot)
-			rb_cnt += rotate_argv(B_STACKNO, a, b);
-		else
+		if (size < 1)
+			return (INPUT_ERROR);
+		else if (size == 1)
+			res = push_argv(A_STACKNO, a, b);
+		else if (size == 2)
 		{
-			pa_cnt += push_argv(A_STACKNO, a, b);
-			if ((*a)->data < second_pivot)
-				ra_cnt += rotate_argv(A_STACKNO, a, b);
+			if ((*b)->data < (*b)->next->data)
+				swap_argv(B_STACKNO, a, b);
+			push_argv(A_STACKNO, a, b);
+			res = push_argv(A_STACKNO, a, b);
 		}
 	}
-	atob(a, b, pa_cnt - ra_cnt);
-	stack_reverse_rotate(a, b, ra_cnt, rb_cnt);
-	atob(a, b, ra_cnt);
-	btoa(a, b, rb_cnt);
+	else if (format == 'a' && size <= 2)
+	{
+		if (size == 1)
+			return (INPUT_ERROR);
+		else if (size == 2)
+			res = sort_two_arg(A_STACKNO, a);
+	}
+	return (res);
+}
+
+void	btoa(t_list **a, t_list **b, int size)
+{
+	int	first_second_pivot[2];
+	int	rb_pa_ra[3];
+
+	if (escape_loop(a, b, size, 'b'))
+		return ;
+	first_second_pivot[0] = find_pivot(*b, 0, size, '1');
+	first_second_pivot[1] = find_pivot(*b, 0, size, '2');
+	rb_pa_ra[0] = 0;
+	rb_pa_ra[1] = 0;
+	rb_pa_ra[2] = 0;
+	while (size--)
+	{
+		if ((*b)->data < first_second_pivot[0])
+			rb_pa_ra[0] += rotate_argv(B_STACKNO, a, b);
+		else
+		{
+			rb_pa_ra[1] += push_argv(A_STACKNO, a, b);
+			if ((*a)->data < first_second_pivot[1])
+				rb_pa_ra[2] += rotate_argv(A_STACKNO, a, b);
+		}
+	}
+	atob(a, b, rb_pa_ra[1] - rb_pa_ra[2]);
+	stack_reverse_rotate(a, b, rb_pa_ra[2], rb_pa_ra[0]);
+	atob(a, b, rb_pa_ra[2]);
+	btoa(a, b, rb_pa_ra[0]);
 }
 
 void	atob(t_list **a, t_list **b, int size)
 {
-	int	first_pivot;
-	int	second_pivot;
-	int	ra_cnt;
-	int	pb_cnt;
-	int	rb_cnt;
+	int	f_s_pivot[2];
+	int	ra_pb_rb[3];
 
-	if (size == 1)
+	if (escape_loop(a, b, size, 'a'))
 		return ;
-	else if (size == 2)
-		return (sort_two_arg(A_STACKNO, a));
-	first_pivot = find_pivot(*a, 0, size, '1');
-	second_pivot = find_pivot(*a, 0, size, '2');
-	ra_cnt = 0;
-	pb_cnt = 0;
-	rb_cnt = 0;
+	f_s_pivot[0] = find_pivot(*a, 0, size, '1');
+	f_s_pivot[1] = find_pivot(*a, 0, size, '2');
+	ra_pb_rb[0] = 0;
+	ra_pb_rb[1] = 0;
+	ra_pb_rb[2] = 0;
 	while (size--)
 	{
-		if ((*a)->data >= second_pivot)
-			ra_cnt += rotate_argv(A_STACKNO, a, b);
+		if ((*a)->data >= f_s_pivot[1])
+			ra_pb_rb[0] += rotate_argv(A_STACKNO, a, b);
 		else
 		{
-			pb_cnt += push_argv(B_STACKNO, a, b);
-			if ((*b)->data >= first_pivot)
-				rb_cnt += rotate_argv(B_STACKNO, a, b);
+			ra_pb_rb[1] += push_argv(B_STACKNO, a, b);
+			if ((*b)->data >= f_s_pivot[0])
+				ra_pb_rb[2] += rotate_argv(B_STACKNO, a, b);
 		}
 	}
-	stack_reverse_rotate(a, b, ra_cnt, rb_cnt);
-	atob(a, b, ra_cnt);
-	btoa(a, b, rb_cnt);
-	btoa(a, b, pb_cnt - rb_cnt);
+	stack_reverse_rotate(a, b, ra_pb_rb[0], ra_pb_rb[2]);
+	atob(a, b, ra_pb_rb[0]);
+	btoa(a, b, ra_pb_rb[2]);
+	btoa(a, b, ra_pb_rb[1] - ra_pb_rb[2]);
 }
 
 void	real_sorting(t_list **a)

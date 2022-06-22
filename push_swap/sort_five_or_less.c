@@ -6,16 +6,17 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 06:40:36 by siokim            #+#    #+#             */
-/*   Updated: 2022/06/21 06:42:09 by siokim           ###   ########.fr       */
+/*   Updated: 2022/06/21 17:55:17 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	sort_two_arg(char stack_no, t_list **stack)
+int	sort_two_arg(char stack_no, t_list **stack)
 {
 	if ((*stack)->data > (*stack)->next->data)
 		swap_argv(stack_no, stack, stack);
+	return (1);
 }
 
 void	sort_three_arg(t_list **stack, int fir, int sec, int trd)
