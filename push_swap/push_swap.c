@@ -6,13 +6,13 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 15:13:46 by siokim            #+#    #+#             */
-/*   Updated: 2022/06/21 15:28:40 by siokim           ###   ########.fr       */
+/*   Updated: 2022/06/23 04:37:23 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	two_arr_malloc_free(char **s)
+static void	two_arr_malloc_free(char **s)
 {
 	int	i;
 
@@ -32,7 +32,7 @@ void	malloc_free(t_list *s)
 	s = 0;
 }
 
-char	is_cmp_values(t_list *stack_a)
+static char	is_cmp_values(t_list *stack_a)
 {
 	t_list	*tmp;
 	t_list	*cur;
@@ -52,7 +52,7 @@ char	is_cmp_values(t_list *stack_a)
 	return (INPUT_SUCCESS);
 }
 
-t_list	*create_stack_a(int argc, char **argv)
+static t_list	*create_stack_a(int argc, char **argv)
 {
 	int		i;
 	int		j;
@@ -61,7 +61,6 @@ t_list	*create_stack_a(int argc, char **argv)
 	t_list	*tmp_list_value;
 
 	i = 1;
-	stack_a = malloc(sizeof(t_list));
 	stack_a = 0;
 	while (i < argc)
 	{
