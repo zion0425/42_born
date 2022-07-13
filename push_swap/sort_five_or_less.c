@@ -6,11 +6,22 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 06:40:36 by siokim            #+#    #+#             */
-/*   Updated: 2022/06/21 17:55:17 by siokim           ###   ########.fr       */
+/*   Updated: 2022/06/23 04:38:08 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
+char	is_sorted(t_list *a)
+{
+	while (a->next)
+	{
+		if (a->data > a->next->data)
+			return (INPUT_ERROR);
+		a = a->next;
+	}
+	return (INPUT_SUCCESS);
+}
 
 int	sort_two_arg(char stack_no, t_list **stack)
 {
@@ -52,7 +63,7 @@ void	sort_five_arg(t_list **a, t_list **b)
 {
 	int	pivot;
 
-	pivot = find_pivot(*a, 0, 3, '3');
+	pivot = find_pivot(*a, 0, 5, '3');
 	while (ft_lstsize(*a) > 3)
 	{
 		if ((*a)->data > pivot)
@@ -61,7 +72,8 @@ void	sort_five_arg(t_list **a, t_list **b)
 			rotate_argv(A_STACKNO, a, b);
 	}
 	sort_three_arg(a, (*a)->data, (*a)->next->data, (*a)->next->next->data);
-	sort_two_arg(B_STACKNO, b);
+	if (ft_lstsize(*b) == 2)
+		sort_two_arg(B_STACKNO, b);
 	while (ft_lstsize(*b) > 0)
 	{
 		push_argv(A_STACKNO, a, b);

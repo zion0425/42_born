@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 01:19:20 by siokim            #+#    #+#             */
-/*   Updated: 2022/06/21 07:37:10 by siokim           ###   ########.fr       */
+/*   Updated: 2022/06/22 20:14:34 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	check_stack(int size, t_list *stack)
 	return (INPUT_SUCCESS);
 }
 
-char	reverse_rotate_stack(t_list **stack)
+static char	reverse_rotate_stack(t_list **stack)
 {
 	t_list	*tmp;
 

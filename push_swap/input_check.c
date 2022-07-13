@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 14:00:32 by siokim            #+#    #+#             */
-/*   Updated: 2022/06/08 12:31:24 by siokim           ###   ########.fr       */
+/*   Updated: 2022/06/22 20:14:08 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ void	print_error_exit_program(void)
 	exit(1);
 }
 
-int	is_max_int(long num)
+static int	is_max_int(long num)
 {
 	return (INT32_MAX < num || INT32_MIN > num);
 }
 
-long	is_digit_atoi(const char *str)
+static long	is_digit_atoi(const char *str)
 {
 	long	sign;
 	long	result;

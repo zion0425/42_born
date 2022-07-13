@@ -6,13 +6,13 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 15:56:43 by siokim            #+#    #+#             */
-/*   Updated: 2022/06/21 06:37:24 by siokim           ###   ########.fr       */
+/*   Updated: 2022/06/23 03:10:45 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	swap(int *a, int *b)
+static void	swap(int *a, int *b)
 {
 	int	tmp;
 
@@ -21,7 +21,7 @@ void	swap(int *a, int *b)
 	*b = tmp;
 }
 
-int	*stack_to_arr(t_list *stack)
+static int	*stack_to_arr(t_list *stack)
 {
 	int		*arr;
 	size_t	i;
@@ -39,7 +39,7 @@ int	*stack_to_arr(t_list *stack)
 	return (arr);
 }
 
-void	quick_sort(int *arr, int left, int right)
+static void	quick_sort(int *arr, int left, int right)
 {
 	int	pivot;
 	int	low;

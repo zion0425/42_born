@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 15:05:48 by siokim            #+#    #+#             */
-/*   Updated: 2022/06/21 18:07:00 by siokim           ###   ########.fr       */
+/*   Updated: 2022/06/23 04:54:11 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	stack_reverse_rotate(t_list **a, t_list **b, int ra_cnt, int rb_cnt)
 		reverse_rotate_argv(B_STACKNO, a, b);
 }
 
-char	escape_loop(t_list **a, t_list **b, int size, char format)
+static char	escape_loop(t_list **a, t_list **b, int size, char format)
 {
 	char	res;
 
@@ -119,9 +119,12 @@ void	real_sorting(t_list **a)
 	size_t	size;
 
 	size = ft_lstsize(*a);
-	b = malloc(sizeof(t_list));
 	b = 0;
-	if (size <= 2)
+	if (size <= 1)
+		return ;
+	if (!is_sorted(*a))
+		return ;
+	if (size == 2)
 		sort_two_arg(A_STACKNO, a);
 	else if (size == 3)
 		sort_three_arg(a, (*a)->data, (*a)->next->data, (*a)->next->next->data);
