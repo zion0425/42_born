@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 19:39:13 by siokim            #+#    #+#             */
-/*   Updated: 2022/07/13 17:17:56 by siokim           ###   ########.fr       */
+/*   Updated: 2022/07/18 01:17:17 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char	*getpath(char **envp, char *command)
 	while (envp[++i] != NULL)
 		if (!ft_strncmp(envp[i], "PATH=", 5))
 			break ;
-	if (envp[i] == NULL)
+	if (ft_strchr(command, '/') || envp[i] == NULL)
 		return (command);
 	path = &envp[i][5];
 	paths = ft_split(path, ':');
@@ -64,8 +64,9 @@ char	*getpath(char **envp, char *command)
 			return (tmp2);
 		free(tmp2);
 	}
-	print_error(command);
-	return (0);
+	write(2, command, sizeof(command));
+	write(2, ": command not found\n", 20);
+	exit(127);
 }
 
 void	pipex(char **envp, char *command)
