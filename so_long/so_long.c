@@ -6,32 +6,105 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 15:20:14 by siokim            #+#    #+#             */
-/*   Updated: 2022/07/20 17:23:09 by siokim           ###   ########.fr       */
+/*   Updated: 2022/07/26 21:04:04 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+#include <stdio.h>
 
-// void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
-// {
-	
-// }
-
-int main()
+int	move_event(int x, int y, t_game *game)
 {
-	void	*mlx;
-	void	*mlx_win;
-	void	*img;
-	void	*heroes_path = "./img/heroes/knight/knight_idle_anim_f0.png";
-	int		heroes_width;
-	int		heroes_height;
+	int	p_x;
+	int	p_y;
 
-
-	mlx = mlx_init();
-	mlx_win = mlx_new_window(mlx, 1080, 600, "Hello World!");
-	// img = mlx_png_file_to_image(mlx, heroes_path, &heroes_width, &heroes_height);
-	mlx_put_image_to_window(mlx, mlx_win, img, 0, 0);
-
-	mlx_loop(mlx);
+	p_x = game->param.x;
+	p_y = game->param.y;
+	x += p_x;
+	y += p_y;
+	if (game->map[y][x] == 'C')
+	{
+		game->e_c_p[1]--;
+		game->map[y][x] = '0';
+	}
+	else if (game->map[y][x] == '1')
+		return (MOVE_WALL);
+	else if (game->map[y][x] == 'E')
+	{
+		if (game->e_c_p[1] == 0)
+			exit(1);
+		return (MOVE_WALL);
+	}
+	return (0);
 }
 
+int	player_move_event(int keycode, t_game *game)
+{
+	int	x;
+	int	y;
+
+	x = game->param.x;
+	y = game->param.y;
+	if (keycode == W)
+		return (move_event(0, -1, game));
+	else if (keycode == A)
+		return (move_event(-1, 0, game));
+	else if (keycode == S)
+		return (move_event(0, 1, game));
+	else if (keycode == D)
+		return (move_event(1, 0, game));
+	return (0);
+}
+
+void	draw_player(t_game *game, int keycode)
+{
+	void	*player_img;
+	void	*tile_img;
+	int		x_y[2];
+
+	if (player_move_event(keycode, game) == MOVE_WALL)
+		return ;
+	tile_img = mlx_xpm_file_to_image(game->mlx, \
+	"./xpm/tile.xpm", &x_y[0], &x_y[1]);
+	mlx_put_image_to_window(game->mlx, game->mlx_win, \
+	tile_img, (game->param.x) * 64, (game->param.y) * 64);
+	if (keycode == W)
+		game->param.y--;
+	else if (keycode == A)
+		game->param.x--;
+	else if (keycode == S)
+		game->param.y++;
+	else if (keycode == D)
+		game->param.x++;
+	game->param.move++;
+	player_img = mlx_xpm_file_to_image(game->mlx, \
+	"./xpm/player.xpm", &x_y[0], &x_y[1]);
+	mlx_put_image_to_window(game->mlx, game->mlx_win, \
+	player_img, (game->param.x) * 64, (game->param.y) * 64);
+	//printf("%d", game->param.move);
+}
+
+int	key_event(int keycode, t_game *game)
+{
+	if (keycode == W || keycode == A || keycode == S || keycode == D)
+		draw_player(game, keycode);
+	else if (keycode == ESC)
+		exit(0);
+	return (0);
+}
+
+int	main(int argc, char **argv)
+{
+	t_game	game;
+
+	if (argc == 2)
+	{
+		ft_memset(&game, 0, sizeof(t_game));
+		game.mlx = mlx_init();
+		game.mlx_win = mlx_new_window(game.mlx, 1080, 600, "Hello World!");
+		read_map(argv[1], &game);
+		check_map(&game);
+		mlx_hook(game.mlx_win, 2, 0, &key_event, &game);
+		mlx_loop(game.mlx);
+	}
+}
