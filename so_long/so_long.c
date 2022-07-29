@@ -6,22 +6,16 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 15:20:14 by siokim            #+#    #+#             */
-/*   Updated: 2022/07/26 21:04:04 by siokim           ###   ########.fr       */
+/*   Updated: 2022/07/29 14:50:42 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-#include <stdio.h>
 
 int	move_event(int x, int y, t_game *game)
 {
-	int	p_x;
-	int	p_y;
-
-	p_x = game->param.x;
-	p_y = game->param.y;
-	x += p_x;
-	y += p_y;
+	x += game->param.x;
+	y += game->param.y;
 	if (game->map[y][x] == 'C')
 	{
 		game->e_c_p[1]--;
@@ -32,7 +26,7 @@ int	move_event(int x, int y, t_game *game)
 	else if (game->map[y][x] == 'E')
 	{
 		if (game->e_c_p[1] == 0)
-			exit(1);
+			exit(0);
 		return (MOVE_WALL);
 	}
 	return (0);
@@ -40,11 +34,6 @@ int	move_event(int x, int y, t_game *game)
 
 int	player_move_event(int keycode, t_game *game)
 {
-	int	x;
-	int	y;
-
-	x = game->param.x;
-	y = game->param.y;
 	if (keycode == W)
 		return (move_event(0, -1, game));
 	else if (keycode == A)
@@ -81,7 +70,7 @@ void	draw_player(t_game *game, int keycode)
 	"./xpm/player.xpm", &x_y[0], &x_y[1]);
 	mlx_put_image_to_window(game->mlx, game->mlx_win, \
 	player_img, (game->param.x) * 64, (game->param.y) * 64);
-	//printf("%d", game->param.move);
+	ft_printf("move : %d\n", game->param.move);
 }
 
 int	key_event(int keycode, t_game *game)
@@ -98,13 +87,16 @@ int	main(int argc, char **argv)
 	t_game	game;
 
 	if (argc == 2)
-	{
+	{	
 		ft_memset(&game, 0, sizeof(t_game));
 		game.mlx = mlx_init();
-		game.mlx_win = mlx_new_window(game.mlx, 1080, 600, "Hello World!");
+		game.mlx_win = mlx_new_window(game.mlx, 1980, 1080, "Hello World!");
 		read_map(argv[1], &game);
 		check_map(&game);
 		mlx_hook(game.mlx_win, 2, 0, &key_event, &game);
-		mlx_loop(game.mlx);
 	}
+	else if (argc == 1)
+		print_error("missing argv\n", 0);
+	else if (argc > 2)
+		print_error("multiple argv\n", 0);
 }

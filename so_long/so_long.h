@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 20:13:06 by siokim            #+#    #+#             */
-/*   Updated: 2022/07/26 20:17:56 by siokim           ###   ########.fr       */
+/*   Updated: 2022/07/29 14:43:42 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ typedef struct s_param
 	int	x;
 	int	y;
 	int	move;
-}	t_player;
+}	t_param;
 
 typedef struct s_game
 {
@@ -38,7 +38,7 @@ typedef struct s_game
 	void	*mlx_win;
 	char	**map;
 	int		e_c_p[3];
-	t_player	param;
+	t_param	param;
 }	t_game;
 
 char	*ft_itoa(int n);
@@ -48,5 +48,7 @@ void	check_map(t_game *game);
 void	read_map(char	*map_path, t_game *game);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 void	*ft_memset(void *b, int c, size_t len);
+int		ft_printf(const char *str, ...);
+void	print_error(char *err_msg, t_game *game);
 
 #endif
