@@ -6,7 +6,7 @@
 #    By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/30 14:44:33 by siokim            #+#    #+#              #
-#    Updated: 2022/07/30 15:49:48 by siokim           ###   ########.fr        #
+#    Updated: 2022/08/04 19:03:44 by siokim           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ RM = rm -rf
 
 NAME = philo
 
-SRCS = philo.c
+SRCS = philo.c utils.c
 OBJS = $(SRCS:.c=.o)
 
 .PHONY : all clean fclean re
