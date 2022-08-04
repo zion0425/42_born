@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 18:31:00 by siokim            #+#    #+#             */
-/*   Updated: 2022/07/30 18:35:53 by siokim           ###   ########.fr       */
+/*   Updated: 2022/08/04 15:23:48 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,22 @@
 # include <pthread.h>
 # include <stdio.h>
 # include <string.h>
+# include <sys/time.h>
 
-typedef struct s_phlio
-{
-	char	fork[2];
-}	t_phlio;
+# define INPUT_ERROR 1
 
 typedef struct s_status
 {
-	pthread_mutex_t	mutex;
-	char			*forks;
-	t_phlio			phlios;
+	pthread_t		*threads;
+	long			now_time;
 }	t_status;
+
+typedef struct s_philo
+{
+	int				no;
+	int				*av;
+	pthread_mutex_t	*mutex_forks;
+
+}	t_philo;
 
 #endif
