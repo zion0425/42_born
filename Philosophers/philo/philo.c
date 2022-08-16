@@ -6,91 +6,76 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 14:44:32 by siokim            #+#    #+#             */
-/*   Updated: 2022/08/11 16:31:40 by siokim           ###   ########.fr       */
+/*   Updated: 2022/08/16 17:21:32 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-long	microtomill(struct timeval time)
+void	set_fork(t_philo p, int *first_fork, int *second_fork, int *no)
 {
-	long	micro;
-	long	sec;
-
-	micro = time.tv_usec / 1000;
-	sec = time.tv_sec * 1000;
-	return (micro + sec);
-}
-
-long	gettime(long start_time)
-{
-	struct timeval		time;
-
-	gettimeofday(&time, 0);
-	return (microtomill(time) - start_time);
-}
-void	*start_thread2(void *philo)
-{
-	t_philo p;
-	struct timeval		time;
-	int		no[2];
-
-	p = *(t_philo *)philo;
-	no[RIGHT_FORK] = p.no;
+	*first_fork = p.no % 2;
+	*second_fork = (*first_fork - 1) * -1;
 	no[LEFT_FORK] = p.no - 1;
+	no[RIGHT_FORK] = p.no;
 	if (no[LEFT_FORK] <= -1)
-		no[LEFT_FORK] = p.av[NUMBER_OF_PHILOES] - 1;
-	gettimeofday(&time, 0);
-	p.start_time = microtomill(time);
-	while (p.av[MUST_EAT]--){
-		pthread_mutex_lock(&p.mutex_forks[no[RIGHT_FORK]]);
-		printf("%ldms : %d 오른쪽 포크.\n",gettime(p.start_time), p.no + 1);
-		pthread_mutex_lock(&p.mutex_forks[no[LEFT_FORK]]);
-		printf("%ldms : %d 왼쪽 포크.\n",gettime(p.start_time), p.no + 1);
-		printf("%ldms : %d 식사중\n",gettime(p.start_time), p.no + 1);
-		p.last_eat_time -= p.av[TIME_TO_EAT] * 1000;
-		usleep(p.av[TIME_TO_EAT] * 1000);
-		p.last_eat_time = gettime(p.start_time);
-		printf("%ldms : %d 식사 종료\n",p.last_eat_time, p.no + 1);
-		pthread_mutex_unlock(&p.mutex_forks[no[RIGHT_FORK]]);
-		pthread_mutex_unlock(&p.mutex_forks[no[LEFT_FORK]]);
-		printf("%ldms : %d 취침\n",gettime(p.start_time), p.no + 1);
-		usleep(p.av[TIME_TO_SLEEP] * 1000);
-		printf("%ldms : %d 생각중\n",gettime(p.start_time), p.no + 1);
-	}
-	return (0);
+		no[RIGHT_FORK] = p.av[NUMBER_OF_PHILOES] - 1;
 }
 
 void	*start_thread(void *philo)
 {
-	t_philo p;
-	struct timeval		time;
+	t_philo	p;
 	int		no[2];
+	int		first_fork;
+	int		second_fork;
 
 	p = *(t_philo *)philo;
-	no[RIGHT_FORK] = p.no;
-	no[LEFT_FORK] = p.no - 1;
-	if (no[LEFT_FORK] <= -1)
-		no[LEFT_FORK] = p.av[NUMBER_OF_PHILOES] - 1;
-	gettimeofday(&time, 0);
-	p.start_time = microtomill(time);
-
-	while (p.av[MUST_EAT]--){
-		pthread_mutex_lock(&p.mutex_forks[no[LEFT_FORK]]);
-		printf("%ldms : %d 왼쪽 포크.\n",gettime(p.start_time), p.no + 1);
-		pthread_mutex_lock(&p.mutex_forks[no[RIGHT_FORK]]);
-		printf("%ldms : %d 오른쪽 포크.\n",gettime(p.start_time), p.no + 1);
-		printf("%ldms : %d 식사중\n",gettime(p.start_time), p.no + 1);
+	set_fork(p, &first_fork, &second_fork, no);
+	p.start_time = gettime(0);
+	while (p.av[MUST_EAT]--)
+	{
+		pthread_mutex_lock(&p.mutex_forks[no[first_fork]]);
+		printf("%ldms : %d has taken a fork\n", gettime(p.start_time), p.no + 1);
+		pthread_mutex_lock(&p.mutex_forks[no[second_fork]]);
+		printf("%ldms : %d has taken a fork\n", gettime(p.start_time), p.no + 1);
+		printf("%ldms : %d is eating\n", gettime(p.start_time), p.no + 1);
 		p.last_eat_time -= p.av[TIME_TO_EAT] * 1000;
 		usleep(p.av[TIME_TO_EAT] * 1000);
 		p.last_eat_time = gettime(p.start_time);
-		printf("%ldms : %d 식사 종료\n",p.last_eat_time, p.no + 1);
-		pthread_mutex_unlock(&p.mutex_forks[no[LEFT_FORK]]);
-		pthread_mutex_unlock(&p.mutex_forks[no[RIGHT_FORK]]);
-		printf("%ldms : %d 취침\n",gettime(p.start_time), p.no + 1);
+		pthread_mutex_unlock(&p.mutex_forks[no[first_fork]]);
+		pthread_mutex_unlock(&p.mutex_forks[no[second_fork]]);
+		printf("%ldms : %d is sleeping\n", gettime(p.start_time), p.no + 1);
 		usleep(p.av[TIME_TO_SLEEP] * 1000);
-		printf("%ldms : %d 생각중\n",gettime(p.start_time), p.no + 1);
+		printf("%ldms : %d is thinking\n", gettime(p.start_time), p.no + 1);
 	}
+	return (0);
+}
+
+void	*monitoring(void *philo)
+{
+	t_philo *p;
+	int	i;
+	//int	num;
+
+	i = 0;
+	p = (t_philo *)philo;
+	//while (p.isfinish != '0')
+	//{
+
+	//	if (p.philoes[i].last_eat_time <= 0)
+	//	{
+	//		i = 0;
+	//		while (i < num)
+	//		{
+	//			pthread_detach(p.threads[i++]);
+	//		}
+
+	//		return (0);
+	//	}
+	//	i++;
+	//	if (i == num)
+	//		i = 0;
+	//}
 	return (0);
 }
 
@@ -99,59 +84,27 @@ int	*input_check(int argc, char **argv)
 	int	*av;
 	int	i;
 
-	av = malloc(sizeof(int) * argc);
+	if (argc != 5 && argc != 6)
+		return (INPUT_ERROR);
+	av = malloc(sizeof(int) * 5);
 	i = argc - 1;
-	if (argc == 5)
-		av[MUST_EAT] = -1;
 	while (--i >= 0)
 	{
 		av[i] = ft_atoi(argv[i + 1]);
 		if (av[i] < 1)
 			return (INPUT_ERROR);
 	}
+	if (argc == 5)
+		av[MUST_EAT] = -1;
 	return (av);
 }
 
-void	*monitoring(void *status)
+int	main(int argc, char **argv)
 {
-	struct timeval		time;
-	t_status s;
-	int	i;
-	long	t;
-	int	num;
-
-
-	i = 0;
-	s = *(t_status *)status;
-	num = s.philoes[0].av[NUMBER_OF_PHILOES];
-
-	while (s.isfinish != '0')
-	{
-		gettimeofday(&time, 0);
-		t = microtomill(time);
-		if (t - s.philoes[i].av[TIME_TO_DIE] <= 0)
-		{
-			i = 0;
-			while (i < num)
-				pthread_detach(s.threads[i]);
-			return (0);
-		}
-		if (i == num)
-			i = 0;
-		i++;
-	}
-	return (0);
-}
-
-int main(int argc, char **argv)
-{
-	t_status			status;
-	t_philo			*philo;
-	int				*av;
-	int				i;
-
-	if (argc != 5 && argc != 6)
-		return (1);
+	t_status	status;
+	t_philo		*philo;
+	int			*av;
+	int			i;
 
 	av = input_check(argc, argv);
 	if (av == INPUT_ERROR)
@@ -160,25 +113,21 @@ int main(int argc, char **argv)
 	status.threads = malloc(sizeof(pthread_t) * av[0] + 1);
 	philo = malloc(sizeof(t_philo) * av[0]);
 	status.philoes = philo;
-	//status.isfinish = '1';
 	i = -1;
 	while (++i < av[0])
 		pthread_mutex_init(&status.real_mutex_fork[i], 0);
-
 	while (--i >= 0)
 	{
 		philo[i].mutex_forks = status.real_mutex_fork;
 		philo[i].no = i;
-		philo[i].av = ft_cpy(av, argc);
-		philo[i].last_eat_time = 0;
-		if (i % 2 == 0)
-			pthread_create(&status.threads[i], 0, start_thread, &philo[i]);
-		else
-			pthread_create(&status.threads[i], 0, start_thread2, &philo[i]);
+		ft_cpy(philo[i].av, av);
+		philo[i].last_eat_time = av[TIME_TO_EAT];
+		pthread_create(&status.threads[i], 0, start_thread, &philo[i]);
+		//pthread_create(&status.threads[i], 0, monitoring, &philo[i]);
 	}
-	pthread_create(&status.threads[av[NUMBER_OF_PHILOES]], 0, monitoring, &status);
+	//for (int i = 0; i < av[0]; i++)
+	//	pthread_detach(status.threads[i]);
 	while (++i < av[0])
 		pthread_join(status.threads[i], 0);
-	//status.isfinish = '0';
 	pthread_join(status.threads[av[0]], 0);
 }

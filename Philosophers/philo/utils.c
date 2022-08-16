@@ -6,55 +6,58 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 15:51:30 by siokim            #+#    #+#             */
-/*   Updated: 2022/08/10 17:13:05 by siokim           ###   ########.fr       */
+/*   Updated: 2022/08/16 17:18:45 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int ft_atoi(const char *str)
+int	ft_atoi(const char *str)
 {
-    int sign;
-    int result;
+	int	sign;
+	int	result;
 
-    sign = 1;
-    result = 0;
-    while ((*str >= 9 && *str <= 13) || *str == 32)
-        str++;
-    if (*str == '+' || *str == '-')
-    {
-        if (*str == '-')
-            sign *= -1;
-        str ++;
-    }
-    while (*str >= 48 && *str <= 57)
-    {
-        result = result * 10 + *str - 48;
-        str++;
-    }
-    return (result * sign);
+	sign = 1;
+	result = 0;
+	while ((*str >= 9 && *str <= 13) || *str == 32)
+		str++;
+	if (*str == '+' || *str == '-')
+	{
+		if (*str == '-')
+			sign *= -1;
+		str ++;
+	}
+	while (*str >= 48 && *str <= 57)
+	{
+		result = result * 10 + *str - 48;
+		str++;
+	}
+	return (result * sign);
 }
 
-size_t  ft_strlen(const char *s)
+void    ft_cpy(int *pav, int *argv)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    while (s[i])
-        i++;
-    return (i);
+	i = -1;
+	while (++i <= 4)
+		pav[i] = argv[i];
 }
 
-int    *ft_cpy(int *src, int argc)
+long	microtomill(struct timeval time)
 {
-    int    *dst;
-    int  i;
-    int  src_len;
+	long	micro;
+	long	sec;
 
-    i = -1;
-    src_len = argc;
-    dst = malloc(sizeof(long) * src_len - 1);
-    while (++i < src_len)
-        dst[i] = src[i];
-    return (dst);
+	micro = time.tv_usec / 1000;
+	sec = time.tv_sec * 1000;
+	return (micro + sec);
+}
+
+long	gettime(long start_time)
+{
+	struct timeval		time;
+
+	gettimeofday(&time, 0);
+	return (microtomill(time) - start_time);
 }
