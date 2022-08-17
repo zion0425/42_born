@@ -6,77 +6,78 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 14:44:32 by siokim            #+#    #+#             */
-/*   Updated: 2022/08/16 17:21:32 by siokim           ###   ########.fr       */
+/*   Updated: 2022/08/18 03:53:45 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	set_fork(t_philo p, int *first_fork, int *second_fork, int *no)
+void	set_fork(t_philo *p, int *first_fork, int *second_fork, int *no)
 {
-	*first_fork = p.no % 2;
+	*first_fork = p->no % 2;
+	if (*first_fork == 0)
+		usleep(10000);
 	*second_fork = (*first_fork - 1) * -1;
-	no[LEFT_FORK] = p.no - 1;
-	no[RIGHT_FORK] = p.no;
+	no[LEFT_FORK] = p->no - 1;
+	no[RIGHT_FORK] = p->no;
 	if (no[LEFT_FORK] <= -1)
-		no[RIGHT_FORK] = p.av[NUMBER_OF_PHILOES] - 1;
+		no[LEFT_FORK] = p->av[NUMBER_OF_PHILOES] - 1;
 }
 
 void	*start_thread(void *philo)
 {
-	t_philo	p;
+	t_philo	*p;
 	int		no[2];
 	int		first_fork;
 	int		second_fork;
 
-	p = *(t_philo *)philo;
+	p = (t_philo *)philo;
 	set_fork(p, &first_fork, &second_fork, no);
-	p.start_time = gettime(0);
-	while (p.av[MUST_EAT]--)
+	p->start_time = gettime(0);
+	p->last_eat_time = p->start_time;
+	while (p->av[MUST_EAT]--)
 	{
-		pthread_mutex_lock(&p.mutex_forks[no[first_fork]]);
-		printf("%ldms : %d has taken a fork\n", gettime(p.start_time), p.no + 1);
-		pthread_mutex_lock(&p.mutex_forks[no[second_fork]]);
-		printf("%ldms : %d has taken a fork\n", gettime(p.start_time), p.no + 1);
-		printf("%ldms : %d is eating\n", gettime(p.start_time), p.no + 1);
-		p.last_eat_time -= p.av[TIME_TO_EAT] * 1000;
-		usleep(p.av[TIME_TO_EAT] * 1000);
-		p.last_eat_time = gettime(p.start_time);
-		pthread_mutex_unlock(&p.mutex_forks[no[first_fork]]);
-		pthread_mutex_unlock(&p.mutex_forks[no[second_fork]]);
-		printf("%ldms : %d is sleeping\n", gettime(p.start_time), p.no + 1);
-		usleep(p.av[TIME_TO_SLEEP] * 1000);
-		printf("%ldms : %d is thinking\n", gettime(p.start_time), p.no + 1);
+		pthread_mutex_lock(&p->mutex_forks[no[first_fork]]);
+		printf("%ldms : %d has taken a fork\n", gettime(p->start_time), p->no + 1);
+		pthread_mutex_lock(&p->mutex_forks[no[second_fork]]);
+		printf("%ldms : %d has taken a fork\n", gettime(p->start_time), p->no + 1);
+		printf("%ldms : %d is eating\n", gettime(p->start_time), p->no + 1);
+		//p->last_eat_time = gettime(-(p->av[TIME_TO_EAT] * 1000));
+		usleep(p->av[TIME_TO_EAT] * 1000);
+		p->last_eat_time = gettime(0);
+		pthread_mutex_unlock(&p->mutex_forks[no[first_fork]]);
+		pthread_mutex_unlock(&p->mutex_forks[no[second_fork]]);
+		printf("%ldms : %d is sleeping\n", gettime(p->start_time), p->no + 1);
+		usleep(p->av[TIME_TO_SLEEP] * 1000);
+		printf("%ldms : %d is thinking\n", gettime(p->start_time), p->no + 1);
 	}
-	return (0);
+	return ((void *)0);
 }
 
-void	*monitoring(void *philo)
+void	monitoring(t_status *s)
 {
-	t_philo *p;
 	int	i;
-	//int	num;
+	int	finished_philo;
+	int	j;
 
-	i = 0;
-	p = (t_philo *)philo;
-	//while (p.isfinish != '0')
-	//{
-
-	//	if (p.philoes[i].last_eat_time <= 0)
-	//	{
-	//		i = 0;
-	//		while (i < num)
-	//		{
-	//			pthread_detach(p.threads[i++]);
-	//		}
-
-	//		return (0);
-	//	}
-	//	i++;
-	//	if (i == num)
-	//		i = 0;
-	//}
-	return (0);
+	i = -1;
+	j = -1;
+	finished_philo = 0;
+	while (++i <= s->philoes[0].av[NUMBER_OF_PHILOES])
+	{
+		if (i == s->philoes[0].av[NUMBER_OF_PHILOES])
+			i = 0;
+		if (s->philoes[i].av[MUST_EAT] == -1)
+			if (++finished_philo >= s->philoes[i].av[NUMBER_OF_PHILOES])
+				break ;
+		if (gettime(s->philoes[i].last_eat_time) >= s->philoes[0].av[TIME_TO_DIE])
+		{
+			printf("%d is died\n", i + 1);
+			while (++j < s->philoes[i].av[NUMBER_OF_PHILOES])
+				pthread_detach(s->threads[j]);
+			break ;
+		}
+	}
 }
 
 int	*input_check(int argc, char **argv)
@@ -95,39 +96,36 @@ int	*input_check(int argc, char **argv)
 			return (INPUT_ERROR);
 	}
 	if (argc == 5)
-		av[MUST_EAT] = -1;
+		av[MUST_EAT] = -2;
 	return (av);
 }
 
 int	main(int argc, char **argv)
 {
-	t_status	status;
-	t_philo		*philo;
+	t_status	*status;
 	int			*av;
 	int			i;
 
 	av = input_check(argc, argv);
 	if (av == INPUT_ERROR)
 		return (1);
-	status.real_mutex_fork = malloc(sizeof(pthread_mutex_t) * av[0]);
-	status.threads = malloc(sizeof(pthread_t) * av[0] + 1);
-	philo = malloc(sizeof(t_philo) * av[0]);
-	status.philoes = philo;
+	status = malloc(sizeof(t_status));
+	status->real_mutex_fork = malloc(sizeof(pthread_mutex_t) * av[0]);
+	status->threads = malloc(sizeof(pthread_t) * av[0] + 1);
+	status->philoes = malloc(sizeof(t_philo) * av[0]);
 	i = -1;
 	while (++i < av[0])
-		pthread_mutex_init(&status.real_mutex_fork[i], 0);
+		pthread_mutex_init(&status->real_mutex_fork[i], 0);
 	while (--i >= 0)
 	{
-		philo[i].mutex_forks = status.real_mutex_fork;
-		philo[i].no = i;
-		ft_cpy(philo[i].av, av);
-		philo[i].last_eat_time = av[TIME_TO_EAT];
-		pthread_create(&status.threads[i], 0, start_thread, &philo[i]);
-		//pthread_create(&status.threads[i], 0, monitoring, &philo[i]);
+		status->philoes[i].mutex_forks = status->real_mutex_fork;
+		status->philoes[i].no = i;
+		ft_cpy(status->philoes[i].av, av);
+		status->philoes[i].start_time = gettime(0);
+		status->philoes[i].last_eat_time = status->philoes[i].start_time;
+		pthread_create(&status->threads[i], 0, start_thread, &status->philoes[i]);
 	}
-	//for (int i = 0; i < av[0]; i++)
-	//	pthread_detach(status.threads[i]);
+	monitoring(status);
 	while (++i < av[0])
-		pthread_join(status.threads[i], 0);
-	pthread_join(status.threads[av[0]], 0);
+		pthread_join(status->threads[i], 0);
 }

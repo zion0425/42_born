@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 18:31:00 by siokim            #+#    #+#             */
-/*   Updated: 2022/08/16 17:18:57 by siokim           ###   ########.fr       */
+/*   Updated: 2022/08/18 03:19:40 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,10 @@ typedef struct s_status
 	pthread_mutex_t	*real_mutex_fork;
 	pthread_mutex_t	*real_mutex_print;
 	t_philo			*philoes;
-	char			isfinish;
 }	t_status;
 
 int		ft_atoi(const char *str);
-void    ft_cpy(int *pav, int *argv);
+void	ft_cpy(int *pav, int *argv);
 long	microtomill(struct timeval time);
 long	gettime(long start_time);
 

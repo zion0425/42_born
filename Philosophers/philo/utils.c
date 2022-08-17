@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 15:51:30 by siokim            #+#    #+#             */
-/*   Updated: 2022/08/16 17:18:45 by siokim           ###   ########.fr       */
+/*   Updated: 2022/08/18 03:19:31 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	ft_atoi(const char *str)
 	return (result * sign);
 }
 
-void    ft_cpy(int *pav, int *argv)
+void	ft_cpy(int *pav, int *argv)
 {
 	int	i;
 
