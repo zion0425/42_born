@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 18:31:00 by siokim            #+#    #+#             */
-/*   Updated: 2022/08/18 03:19:40 by siokim           ###   ########.fr       */
+/*   Updated: 2022/08/23 19:11:13 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 # include <string.h>
 # include <sys/time.h>
 
-# define INPUT_ERROR 0
 # define NUMBER_OF_PHILOES 0
 # define TIME_TO_DIE 1
 # define TIME_TO_EAT 2
@@ -48,9 +47,12 @@ typedef struct s_status
 	t_philo			*philoes;
 }	t_status;
 
-int		ft_atoi(const char *str);
-void	ft_cpy(int *pav, int *argv);
-long	microtomill(struct timeval time);
-long	gettime(long start_time);
+t_status	*init_status(int av);
+int			ft_atoi(const char *str);
+int			*input_check(int argc, char **argv);
+void		ft_cpy(int *pav, int *argv);
+long		microtomill(struct timeval time);
+long		gettime(long start_time);
+void		init_philoes(t_status *status, int i, int *av, long start_time);
 
 #endif
