@@ -6,16 +6,18 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 14:44:32 by siokim            #+#    #+#             */
-/*   Updated: 2022/08/25 21:14:24 by siokim           ###   ########.fr       */
+/*   Updated: 2022/08/26 00:42:07 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	print(t_philo *p, char *str)
+void	print(t_philo *p, char *str, char is_eating)
 {
 	pthread_mutex_lock(p->mutex_print);
 	printf("%ldms\t%d %s\n", gettime(p->start_time), p->no + 1, str);
+	if (is_eating == '1')
+		p->last_eat_time = gettime(0);
 	pthread_mutex_unlock(p->mutex_print);
 }
 
@@ -43,17 +45,16 @@ void	*start_thread(void *philo)
 	while (p->av[MUST_EAT]--)
 	{
 		pthread_mutex_lock(&p->mutex_forks[no[first_fork]]);
-		print(p, "has taken a fork");
+		print(p, "has taken a fork", '0');
 		pthread_mutex_lock(&p->mutex_forks[no[second_fork]]);
-		print(p, "has taken a fork");
-		print(p, "has eating");
-		p->last_eat_time = gettime(0);
+		print(p, "has taken a fork", '0');
+		print(p, "has eating", '1');
 		ft_sleep(p->av[TIME_TO_EAT]);
 		pthread_mutex_unlock(&p->mutex_forks[no[second_fork]]);
 		pthread_mutex_unlock(&p->mutex_forks[no[first_fork]]);
-		print(p, "has sleeping");
+		print(p, "has sleeping", '0');
 		ft_sleep(p->av[TIME_TO_SLEEP]);
-		print(p, "has thinking");
+		print(p, "has thinking", '0');
 		usleep(200);
 	}
 	return ((void *)0);
@@ -73,16 +74,17 @@ void	monitoring(t_status *s)
 		if (s->philoes[i].av[MUST_EAT] == -1)
 			if (++finished_philo >= s->philoes[i].av[NUMBER_OF_PHILOES])
 				break ;
+		pthread_mutex_lock(s->real_mutex_print);
 		if (gettime(s->philoes[i].last_eat_time) \
 		>= s->philoes[0].av[TIME_TO_DIE])
 		{
-			pthread_mutex_lock(s->real_mutex_print);
 			printf("%ldms\t%d is died\n", \
 			gettime(s->philoes[i].start_time), i + 1);
 			while (--(s->philoes[i].av[NUMBER_OF_PHILOES]) >= 0)
 				pthread_detach(s->threads[s->philoes[i].av[NUMBER_OF_PHILOES]]);
 			break ;
 		}
+		pthread_mutex_unlock(s->real_mutex_print);
 		usleep(100);
 	}
 }
