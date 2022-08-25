@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 14:44:32 by siokim            #+#    #+#             */
-/*   Updated: 2022/08/25 21:07:58 by siokim           ###   ########.fr       */
+/*   Updated: 2022/08/25 21:14:24 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	set_fork(t_philo *p, int *first_fork, int *second_fork, int *no)
 	if (no[RIGHT_FORK] == p->av[NUMBER_OF_PHILOES])
 		no[RIGHT_FORK] = 0;
 	if (*first_fork == 1)
-		usleep(1000);
+		usleep(100);
 }
 
 void	*start_thread(void *philo)
