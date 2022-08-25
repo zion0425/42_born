@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 14:44:32 by siokim            #+#    #+#             */
-/*   Updated: 2022/08/24 21:01:54 by siokim           ###   ########.fr       */
+/*   Updated: 2022/08/25 16:04:33 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,33 @@ void	print(t_philo *p, char *str)
 void	set_fork(t_philo *p, int *first_fork, int *second_fork, int *no)
 {
 	*first_fork = p->no % 2;
-	if (*first_fork == 0)
-		usleep(p->av[TIME_TO_EAT] * 1000);
 	*second_fork = (*first_fork - 1) * -1;
-	no[LEFT_FORK] = p->no - 1;
-	no[RIGHT_FORK] = p->no;
-	if (no[LEFT_FORK] <= -1)
-		no[LEFT_FORK] = p->av[NUMBER_OF_PHILOES] - 1;
+	no[LEFT_FORK] = p->no;
+	no[RIGHT_FORK] = p->no + 1;
+	if (no[RIGHT_FORK] == p->av[NUMBER_OF_PHILOES])
+		no[RIGHT_FORK] = 0;
+	if (*first_fork == 1)
+			usleep(p->no * 1000);
+}
+
+
+void	sleep(long wait_time)
+{
+	/*
+	새로운_슬립_함수(대기시간)
+	{
+	    목표시각=대기시간 + 현재시각();
+    	while(목표시각 > 현재시각())
+    	{usleep(100)}
+	}
+	*/
+	long	res_time;
+	long	now_time;
+	
+	now_time = gettime(0);
+	res_time = wait_time + now_time;
+    while(res_time > now_time)
+		usleep(100)
 }
 
 void	*start_thread(void *philo)
@@ -49,8 +69,8 @@ void	*start_thread(void *philo)
 		print(p, "has eating");
 		p->last_eat_time = gettime(0);
 		usleep(p->av[TIME_TO_EAT] * 1000);
-		pthread_mutex_unlock(&p->mutex_forks[no[first_fork]]);
 		pthread_mutex_unlock(&p->mutex_forks[no[second_fork]]);
+		pthread_mutex_unlock(&p->mutex_forks[no[first_fork]]);
 		print(p, "has sleeping");
 		usleep(p->av[TIME_TO_SLEEP] * 1000);
 		print(p, "has thinking");
