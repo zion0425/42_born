@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 18:31:00 by siokim            #+#    #+#             */
-/*   Updated: 2022/08/23 19:11:13 by siokim           ###   ########.fr       */
+/*   Updated: 2022/08/25 17:35:31 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,6 @@ void		ft_cpy(int *pav, int *argv);
 long		microtomill(struct timeval time);
 long		gettime(long start_time);
 void		init_philoes(t_status *status, int i, int *av, long start_time);
+void		ft_sleep(long wait_time);
 
 #endif

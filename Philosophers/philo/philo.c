@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 14:44:32 by siokim            #+#    #+#             */
-/*   Updated: 2022/08/25 16:04:33 by siokim           ###   ########.fr       */
+/*   Updated: 2022/08/25 21:07:58 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,27 +28,7 @@ void	set_fork(t_philo *p, int *first_fork, int *second_fork, int *no)
 	if (no[RIGHT_FORK] == p->av[NUMBER_OF_PHILOES])
 		no[RIGHT_FORK] = 0;
 	if (*first_fork == 1)
-			usleep(p->no * 1000);
-}
-
-
-void	sleep(long wait_time)
-{
-	/*
-	새로운_슬립_함수(대기시간)
-	{
-	    목표시각=대기시간 + 현재시각();
-    	while(목표시각 > 현재시각())
-    	{usleep(100)}
-	}
-	*/
-	long	res_time;
-	long	now_time;
-	
-	now_time = gettime(0);
-	res_time = wait_time + now_time;
-    while(res_time > now_time)
-		usleep(100)
+		usleep(1000);
 }
 
 void	*start_thread(void *philo)
@@ -68,12 +48,13 @@ void	*start_thread(void *philo)
 		print(p, "has taken a fork");
 		print(p, "has eating");
 		p->last_eat_time = gettime(0);
-		usleep(p->av[TIME_TO_EAT] * 1000);
+		ft_sleep(p->av[TIME_TO_EAT]);
 		pthread_mutex_unlock(&p->mutex_forks[no[second_fork]]);
 		pthread_mutex_unlock(&p->mutex_forks[no[first_fork]]);
 		print(p, "has sleeping");
-		usleep(p->av[TIME_TO_SLEEP] * 1000);
+		ft_sleep(p->av[TIME_TO_SLEEP]);
 		print(p, "has thinking");
+		usleep(200);
 	}
 	return ((void *)0);
 }
@@ -82,10 +63,8 @@ void	monitoring(t_status *s)
 {
 	int	i;
 	int	finished_philo;
-	int	j;
 
 	i = -1;
-	j = -1;
 	finished_philo = 0;
 	while (++i <= s->philoes[0].av[NUMBER_OF_PHILOES])
 	{
@@ -100,10 +79,11 @@ void	monitoring(t_status *s)
 			pthread_mutex_lock(s->real_mutex_print);
 			printf("%ldms\t%d is died\n", \
 			gettime(s->philoes[i].start_time), i + 1);
-			while (++j < s->philoes[i].av[NUMBER_OF_PHILOES])
-				pthread_detach(s->threads[j]);
+			while (--(s->philoes[i].av[NUMBER_OF_PHILOES]) >= 0)
+				pthread_detach(s->threads[s->philoes[i].av[NUMBER_OF_PHILOES]]);
 			break ;
 		}
+		usleep(100);
 	}
 }
 

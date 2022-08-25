@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 15:51:30 by siokim            #+#    #+#             */
-/*   Updated: 2022/08/18 03:19:31 by siokim           ###   ########.fr       */
+/*   Updated: 2022/08/25 21:08:59 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,13 @@ long	gettime(long start_time)
 
 	gettimeofday(&time, 0);
 	return (microtomill(time) - start_time);
+}
+
+void	ft_sleep(long wait_time)
+{
+	long	res_time;
+
+	res_time = wait_time + gettime(0);
+	while (res_time > gettime(0))
+		usleep(100);
 }
