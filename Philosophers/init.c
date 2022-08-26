@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 15:11:42 by siokim            #+#    #+#             */
-/*   Updated: 2022/08/26 17:44:45 by siokim           ###   ########.fr       */
+/*   Updated: 2022/08/27 00:48:36 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,29 @@ void	init_philoes(t_status *status, int i, int *av, long start_time)
 	ft_cpy(status->philoes[i].av, av);
 	status->philoes[i].start_time = start_time;
 	status->philoes[i].last_eat_time = status->philoes[i].start_time;
+}
+
+void	eating(t_philo *p, int no[2], int first_fork, int second_fork)
+{
+	pthread_mutex_lock(&p->mutex_forks[no[first_fork]]);
+	print(p, "has taken a fork", '0');
+	pthread_mutex_lock(&p->mutex_forks[no[second_fork]]);
+	print(p, "has taken a fork", '0');
+	print(p, "is eating", '1');
+	ft_sleep(p->av[TIME_TO_EAT]);
+	pthread_mutex_unlock(&p->mutex_forks[no[second_fork]]);
+	pthread_mutex_unlock(&p->mutex_forks[no[first_fork]]);
+}
+
+int	eat_cnt(t_status *s, int i, int max)
+{
+	int	res;
+
+	res = 0;
+	pthread_mutex_lock(&s->real_mutex_musteat[i]);
+	if (s->philoes[i].av[MUST_EAT] == -1)
+		if (++s->finished_philoes >= max)
+			res = -1;
+	pthread_mutex_unlock(&s->real_mutex_musteat[i]);
+	return (s->finished_philoes);
 }

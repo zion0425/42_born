@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 14:44:32 by siokim            #+#    #+#             */
-/*   Updated: 2022/08/26 18:02:59 by siokim           ###   ########.fr       */
+/*   Updated: 2022/08/27 00:47:34 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,7 @@ void	*start_thread(void *philo)
 	while (p->av[MUST_EAT]--)
 	{
 		pthread_mutex_unlock(&p->mutex_musteat[p->no]);
-		pthread_mutex_lock(&p->mutex_forks[no[first_fork]]);
-		print(p, "has taken a fork", '0');
-		pthread_mutex_lock(&p->mutex_forks[no[second_fork]]);
-		print(p, "has taken a fork", '0');
-		print(p, "is eating", '1');
-		ft_sleep(p->av[TIME_TO_EAT]);
-		pthread_mutex_unlock(&p->mutex_forks[no[second_fork]]);
-		pthread_mutex_unlock(&p->mutex_forks[no[first_fork]]);
+		eating(p, no, first_fork, second_fork);
 		print(p, "is sleeping", '0');
 		ft_sleep(p->av[TIME_TO_SLEEP]);
 		print(p, "is thinking", '0');
@@ -75,10 +68,9 @@ void	monitoring(t_status *s, long max)
 			i = 0;
 		if (i == 0)
 			s->finished_philoes = 0;
-		pthread_mutex_lock(&s->real_mutex_musteat[i]);
-		if (s->philoes[i].av[MUST_EAT] == -1)
-			if (++s->finished_philoes >= max)
-				break ;
+		s->finished_philoes = eat_cnt(s, i, max);
+		if (s->finished_philoes == -1)
+			break ;
 		pthread_mutex_unlock(&s->real_mutex_musteat[i]);
 		pthread_mutex_lock(s->real_mutex_print);
 		if (gettime(s->philoes[i].last_eat_time) \
@@ -86,8 +78,8 @@ void	monitoring(t_status *s, long max)
 		{
 			printf("%ldms\t%d is died\n", \
 			gettime(s->philoes[i].start_time), i + 1);
-			while (--(s->philoes[i].av[NUMBER_OF_PHILOES]) >= 0)
-				pthread_detach(s->threads[s->philoes[i].av[NUMBER_OF_PHILOES]]);
+			while (--max >= 0)
+				pthread_detach(s->threads[max]);
 			break ;
 		}
 		pthread_mutex_unlock(s->real_mutex_print);
