@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 18:31:00 by siokim            #+#    #+#             */
-/*   Updated: 2022/08/27 12:57:12 by siokim           ###   ########.fr       */
+/*   Updated: 2022/08/27 13:02:46 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # include <stdlib.h>
 # include <pthread.h>
 # include <stdio.h>
-# include <string.h>
 # include <sys/time.h>
 
 # define NUMBER_OF_PHILOES 0
@@ -27,7 +26,6 @@
 # define MUST_EAT 4
 # define LEFT_FORK 0
 # define RIGHT_FORK 1
-# define WAIT_TIME_BEFORE_MONITOR 1000
 
 typedef struct s_philo
 {
