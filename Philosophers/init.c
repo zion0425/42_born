@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 15:11:42 by siokim            #+#    #+#             */
-/*   Updated: 2022/08/27 00:48:36 by siokim           ###   ########.fr       */
+/*   Updated: 2022/08/27 12:57:16 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,15 +81,10 @@ void	eating(t_philo *p, int no[2], int first_fork, int second_fork)
 	pthread_mutex_unlock(&p->mutex_forks[no[first_fork]]);
 }
 
-int	eat_cnt(t_status *s, int i, int max)
+void	eat_cnt(t_status *s, int i)
 {
-	int	res;
-
-	res = 0;
 	pthread_mutex_lock(&s->real_mutex_musteat[i]);
 	if (s->philoes[i].av[MUST_EAT] == -1)
-		if (++s->finished_philoes >= max)
-			res = -1;
+		++s->finished_philoes;
 	pthread_mutex_unlock(&s->real_mutex_musteat[i]);
-	return (s->finished_philoes);
 }

@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 18:31:00 by siokim            #+#    #+#             */
-/*   Updated: 2022/08/27 00:46:59 by siokim           ###   ########.fr       */
+/*   Updated: 2022/08/27 12:57:12 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ long		gettime(long start_time);
 void		init_philoes(t_status *status, int i, int *av, long start_time);
 void		ft_sleep(long wait_time);
 void		eating(t_philo *p, int no[2], int first_fork, int second_fork);
-int			eat_cnt(t_status *s, int i, int max);
+void		eat_cnt(t_status *s, int i);
 void		print(t_philo *p, char *str, char is_eating);
 
 #endif

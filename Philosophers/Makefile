@@ -6,12 +6,12 @@
 #    By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/30 14:44:33 by siokim            #+#    #+#              #
-#    Updated: 2022/08/26 17:53:23 by siokim           ###   ########.fr        #
+#    Updated: 2022/08/27 12:59:48 by siokim           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra #-g -fsanitize=thread
+CFLAGS = -Wall -Werror -Wextra
 RM = rm -rf
 
 NAME = philo

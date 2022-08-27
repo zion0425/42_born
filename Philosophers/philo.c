@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 14:44:32 by siokim            #+#    #+#             */
-/*   Updated: 2022/08/27 00:47:34 by siokim           ###   ########.fr       */
+/*   Updated: 2022/08/27 12:58:08 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@ void	monitoring(t_status *s, long max)
 			i = 0;
 		if (i == 0)
 			s->finished_philoes = 0;
-		s->finished_philoes = eat_cnt(s, i, max);
-		if (s->finished_philoes == -1)
+		eat_cnt(s, i);
+		if (s->finished_philoes >= max)
 			break ;
 		pthread_mutex_unlock(&s->real_mutex_musteat[i]);
 		pthread_mutex_lock(s->real_mutex_print);
